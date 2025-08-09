@@ -1,75 +1,75 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>AlgoRhythm | Sign In</title> <!-- Tailwind CDN (for quick drop-in; in production, use your build pipeline) --> <script src="https://cdn.tailwindcss.com"></script> <!-- Inter font to match site vibe --> <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet"> <style> /* Tailwind utility base is injected by CDN; below are your custom styles */ /* =========================== AlgoRhythm Core Variables =========================== */ :root{ --bg1: #0A0A0F; --bg2: #050508; --accent: #E5E7EB; --glow: #F59E0B; --muted: #94a3b8; --mouse-x: 50%; --mouse-y: 50%; --mouse-x-px: 50vw; --mouse-y-px: 50vh; } html,body,#root { height: 100%; } body{ background: radial-gradient(1400px 900px at 70% -20%, rgba(245,158,11,0.08), transparent 60%), linear-gradient(180deg, var(--bg1) 0%, var(--bg2) 100%); color: white; font-family: 'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: hidden; } h1,h2,h3{ font-family: 'Inter', ui-sans-serif, system-ui; font-weight: 700; letter-spacing: -0.025em; } /* Buttons */ .btn-primary{ display:inline-flex; align-items:center; justify-content:center; padding: .75rem 1.5rem; border-radius: .75rem; font-weight: 600; position: relative; overflow: hidden; background: linear-gradient(135deg, #F59E0B, #D97706); color: #0A0A0F; box-shadow: 0 8px 32px rgba(245,158,11,0.25); transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); } .btn-primary:hover{ transform: translateY(-3px); box-shadow: 0 16px 48px rgba(245,158,11,0.4); } .btn-primary::before{ content:''; position:absolute; inset:0; background: linear-gradient(135deg, #FBBF24, #F59E0B); opacity:0; transition: opacity .3s ease; } .btn-primary:hover::before{ opacity:1; } .btn-primary:active{ transform: translateY(0) scale(.995); } .btn-ghost{ display:inline-flex; align-items:center; justify-content:center; padding: .5rem 1.25rem; border-radius: .75rem; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.05); color: white; backdrop-filter: blur(8px); transition: all .3s cubic-bezier(0.4, 0, 0.2, 1); } .btn-ghost:hover{ border-color: rgba(245,158,11,0.6); background: rgba(245,158,11,0.1); transform: translateY(-2px); } /* Glass card */ .glass{ background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05)); border: 1px solid rgba(255,255,255,0.15); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); } /* 3D tile */ .tile{ position: relative; border-radius: 20px; overflow: hidden; transform-style: preserve-3d; transition: all .6s cubic-bezier(.22,1,.36,1); } @media (hover:hover) and (pointer: fine){ .tile:hover{ transform: perspective(1000px) rotateX(2deg) rotateY(-2deg) translateZ(8px); box-shadow: 0 25px 50px rgba(0,0,0,0.4); } } .tile-glow{ position: absolute; right: -20%; top: -30%; width: 260px; height: 260px; background: radial-gradient(circle at 30% 30%, rgba(245,158,11,0.15), transparent 60%); filter: blur(28px); pointer-events: none; } /* Tile sheen that follows cursor */ .tile::after{ content:""; position:absolute; inset:-1px; pointer-events:none; background: radial-gradient(200px 200px at var(--mouse-x) var(--mouse-y), rgba(255,255,255,0.08), transparent 60%), linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0)); transition: opacity .2s ease; opacity:.7; } @media (hover:hover) and (pointer:fine){ .tile:hover::after{ opacity:1; } } /* Reveal system */ .reveal, .reveal-left, .reveal-right, .reveal-zoom{ opacity: 0; will-change: transform, opacity; transform-origin: center center; } .reveal{ transform: translateY(18px); } .reveal-left{ transform: translateX(-36px); } .reveal-right{ transform: translateX(36px); } .reveal-zoom{ transform: scale(.96); } .reveal-active{ opacity: 1 !important; transform: none !important; transition: opacity .82s cubic-bezier(.22,1,.36,1), transform .82s cubic-bezier(.22,1,.36,1); } .stagger-1 { transition-delay: .12s; } .stagger-2 { transition-delay: .24s; } .stagger-3 { transition-delay: .36s; } .stagger-4 { transition-delay: .48s; } /* CTA glow pulse */ @keyframes ctaPulse{ 0%,100%{ box-shadow:0 8px 32px rgba(245,158,11,0.25);} 50%{ box-shadow:0 16px 48px rgba(245,158,11,0.5);} } .cta-glow{ animation: ctaPulse 3s ease-in-out infinite; } /* Cursor follower */ .cursor-follower{ position: fixed; pointer-events: none; z-index: 10000; width: 80px; height: 80px; border-radius: 999px; transform: translate3d(calc(var(--mouse-x) - 40px), calc(var(--mouse-y) - 40px), 0); transition: transform .12s ease-out; mix-blend-mode: screen; opacity:.6; filter: blur(20px); background: radial-gradient(circle at 50% 50%, rgba(245,158,11,0.2), transparent 70%); } /* Background blobs */ .blob{ position: fixed; inset: 0; pointer-events: none; z-index: -20; filter: blur(90px); } .blob-1 { background: radial-gradient(40% 30% at 20% 10%, rgba(245,158,11,0.12), transparent 70%); } .blob-2 { background: radial-gradient(40% 30% at 80% 0%, rgba(217,119,6,0.08), transparent 70%); } .section-spacing{ padding-top: 6rem; padding-bottom: 6rem; } @media (min-width:768px){ .section-spacing{ padding-top: 8rem; padding-bottom: 8rem; } } /* Loading state for buttons */ .btn-loading{ position: relative; pointer-events: none; opacity:.85; } .btn-loading::after{ content:""; width:16px; height:16px; border-radius:999px; border:2px solid rgba(10,10,15,.4); border-top-color:#0A0A0F; position:absolute; right:14px; top:50%; transform:translateY(-50%); animation: spin .7s linear infinite; } @keyframes spin{ to{ transform: translateY(-50%) rotate(360deg);} } /* Reduced motion safety */ @media (prefers-reduced-motion: reduce){ .reveal, .reveal-left, .reveal-right, .reveal-zoom, .tile, .cursor-follower, .cta-glow{ transition: none !important; animation: none !important; transform: none !important; opacity:1 !important; } } /* Focus */ button:focus-visible, a:focus-visible{ outline:2px solid #F59E0B; outline-offset:2px; } /* Scrollbar (WebKit) */ ::-webkit-scrollbar{ width: 8px; } ::-webkit-scrollbar-track{ background: rgba(255,255,255,0.05); } ::-webkit-scrollbar-thumb{ background: linear-gradient(135deg, #F59E0B, #D97706); border-radius: 4px; } ::-webkit-scrollbar-thumb:hover{ background: linear-gradient(135deg, #FBBF24, #F59E0B); } ::selection{ background: rgba(245,158,11,0.3); color: white; } .text-gradient{ background: linear-gradient(135deg, #FBBF24, #F59E0B, #DC2626); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; background-size: 200% 200%; animation: gradientShift 4s ease-in-out infinite; } @keyframes gradientShift{ 0%,100%{ background-position: 0% 50%; } 50%{ background-position: 100% 50%; } } </style> </head> <body> <!-- Ambient blobs --> <div class="blob blob-1"></div> <div class="blob blob-2"></div> <!-- Optional simple header --> <header class="max-w-6xl mx-auto w-full px-4 py-4 flex items-center justify-between"> <div class="flex items-center gap-3"> <span class="inline-flex items-center justify-center w-10 h-10 rounded-xl" style="background: linear-gradient(135deg, #F59E0B, #D97706); box-shadow: 0 8px 24px rgba(245,158,11,.35); color:#1a1205; font-weight:800;"> AR </span> <span class="font-semibold tracking-tight">AlgoRhythm</span> </div> <a href="/" class="text-sm text-[color:var(--accent)] hover:text-white transition">Back to Home</a> </header> <!-- Auth Section --> <section class="min-h-[calc(100vh-120px)] flex items-center justify-center section-spacing"> <div class="relative max-w-4xl w-full px-4"> <!-- follower glow --> <div class="cursor-follower" aria-hidden="true"></div>  <div id="authCard"
-       class="tile glass relative mx-auto w-full rounded-2xl p-6 md:p-8 reveal"
-       style="transform-style: preserve-3d;">
-    <!-- decorative glow -->
-    <span class="tile-glow"></span>
+<section class="min-h-[calc(100vh-120px)] flex items-center justify-center section-spacing"> <div class="relative max-w-4xl w-full px-4"> <!-- follower glow --> <div class="cursor-follower" aria-hidden="true"></div>
+<div id="authCard"
+     class="tile glass relative mx-auto w-full rounded-2xl p-6 md:p-8 reveal"
+     style="transform-style: preserve-3d;">
+  <!-- decorative glow -->
+  <span class="tile-glow"></span>
 
-    <!-- heading -->
-    <div class="text-center mb-6">
-      <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">Welcome to AlgoRhythm</h1>
-      <p class="text-sm md:text-base text-[color:var(--muted)] mt-2">Sign in to sync problems, playlists, and progress.</p>
+  <!-- heading -->
+  <div class="text-center mb-6">
+    <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-gradient">Welcome to AlgoRhythm</h1>
+    <p class="text-sm md:text-base text-[color:var(--muted)] mt-2">Sign in to sync problems, playlists, and progress.</p>
+  </div>
+
+  <!-- content grid -->
+  <div class="grid md:grid-cols-2 gap-4 md:gap-6">
+    <!-- OAuth quick sign-in -->
+    <div class="tile glass p-4 md:p-5 rounded-xl reveal-left stagger-1">
+      <h2 class="text-lg font-semibold mb-3">Continue with</h2>
+
+      <button id="btnGoogle"
+              class="btn-primary cta-glow w-full mb-3 flex items-center gap-3 justify-center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M23.04 12.261c0-.815-.073-1.6-.209-2.352H12v4.45h6.19a5.29 5.29 0 0 1-2.293 3.47v2.878h3.71c2.176-2.003 3.433-4.956 3.433-8.446Z" fill="#4285F4"/>
+          <path d="M12 24c3.105 0 5.713-1.03 7.618-2.793l-3.71-2.878c-1.03.69-2.35 1.1-3.908 1.1-3.004 0-5.55-2.03-6.458-4.76H1.704v2.987A11.997 11.997 0 0 0 12 24Z" fill="#34A853"/>
+          <path d="M5.542 14.67A7.2 7.2 0 0 1 5.17 12c0-.93.16-1.83.372-2.67V6.343H1.704A12 12 0 0 0 0 12c0 1.92.46 3.73 1.704 5.657L5.542 14.67Z" fill="#FBBC04"/>
+          <path d="M12 4.75c1.686 0 3.197.58 4.387 1.72l3.29-3.29C17.705 1.17 15.105 0 12 0 7.704 0 3.996 2.457 1.704 6.343L5.54 9.33C6.45 6.6 8.996 4.75 12 4.75Z" fill="#EA4335"/>
+        </svg>
+        Sign in with Google
+      </button>
+
+      <button id="btnGithub"
+              class="btn-ghost w-full flex items-center gap-3 justify-center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.38 7.86 10.89.58.11.79-.26.79-.57v-2.2c-3.2.71-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.18.08 1.81 1.22 1.81 1.22 1.05 1.81 2.77 1.29 3.45.98.11-.77.41-1.29.74-1.58-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.19a11 11 0 0 1 5.8 0c2.21-1.5 3.18-1.19 3.18-1.19.63 1.59.24 2.77.12 3.06.75.81 1.2 1.84 1.2 3.1 0 4.41-2.69 5.39-5.25 5.67.42.36.8 1.07.8 2.16v3.21c0 .32.21.69.8.57A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/>
+        </svg>
+        Sign in with GitHub
+      </button>
+
+      <p class="text-xs text-[color:var(--muted)] mt-3">
+        We’ll never post on your behalf. By continuing, you agree to our terms and privacy policy.
+      </p>
     </div>
 
-    <!-- content grid -->
-    <div class="grid md:grid-cols-2 gap-4 md:gap-6">
-      <!-- OAuth quick sign-in -->
-      <div class="tile glass p-4 md:p-5 rounded-xl reveal-left stagger-1">
-        <h2 class="text-lg font-semibold mb-3">Continue with</h2>
-
-        <button id="btnGoogle"
-                class="btn-primary cta-glow w-full mb-3 flex items-center gap-3 justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-            <path d="M23.04 12.261c0-.815-.073-1.6-.209-2.352H12v4.45h6.19a5.29 5.29 0 0 1-2.293 3.47v2.878h3.71c2.176-2.003 3.433-4.956 3.433-8.446Z" fill="#4285F4"/>
-            <path d="M12 24c3.105 0 5.713-1.03 7.618-2.793l-3.71-2.878c-1.03.69-2.35 1.1-3.908 1.1-3.004 0-5.55-2.03-6.458-4.76H1.704v2.987A11.997 11.997 0 0 0 12 24Z" fill="#34A853"/>
-            <path d="M5.542 14.67A7.2 7.2 0 0 1 5.17 12c0-.93.16-1.83.372-2.67V6.343H1.704A12 12 0 0 0 0 12c0 1.92.46 3.73 1.704 5.657L5.542 14.67Z" fill="#FBBC04"/>
-            <path d="M12 4.75c1.686 0 3.197.58 4.387 1.72l3.29-3.29C17.705 1.17 15.105 0 12 0 7.704 0 3.996 2.457 1.704 6.343L5.54 9.33C6.45 6.6 8.996 4.75 12 4.75Z" fill="#EA4335"/>
-          </svg>
-          Sign in with Google
-        </button>
-
-        <button id="btnGithub"
-                class="btn-ghost w-full flex items-center gap-3 justify-center">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 .5A11.5 11.5 0 0 0 .5 12c0 5.08 3.29 9.38 7.86 10.89.58.11.79-.26.79-.57v-2.2c-3.2.71-3.87-1.37-3.87-1.37-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.7.08-.7 1.18.08 1.81 1.22 1.81 1.22 1.05 1.81 2.77 1.29 3.45.98.11-.77.41-1.29.74-1.58-2.55-.29-5.23-1.28-5.23-5.68 0-1.26.45-2.29 1.2-3.1-.12-.29-.52-1.47.11-3.06 0 0 .97-.31 3.18 1.19a11 11 0 0 1 5.8 0c2.21-1.5 3.18-1.19 3.18-1.19.63 1.59.24 2.77.12 3.06.75.81 1.2 1.84 1.2 3.1 0 4.41-2.69 5.39-5.25 5.67.42.36.8 1.07.8 2.16v3.21c0 .32.21.69.8.57A11.5 11.5 0 0 0 23.5 12 11.5 11.5 0 0 0 12 .5Z"/>
-          </svg>
-          Sign in with GitHub
-        </button>
-
-        <p class="text-xs text-[color:var(--muted)] mt-3">
-          We’ll never post on your behalf. By continuing, you agree to our terms and privacy policy.
-        </p>
-      </div>
-
-      <!-- Email form -->
-      <div class="tile glass p-4 md:p-5 rounded-xl reveal-right stagger-2">
-        <h2 class="text-lg font-semibold mb-3">Use your email</h2>
-        <form id="emailForm" class="space-y-3" autocomplete="on">
-          <div>
-            <label class="block text-sm mb-1 text-[color:var(--muted)]">Email</label>
-            <input id="email" type="email" required
-                   class="w-full h-11 px-3 rounded-xl bg-[#12121a] border border-[rgba(255,255,255,0.15)] text-white outline-none focus:border-[rgba(245,158,11,0.7)] focus:ring-4 focus:ring-[rgba(245,158,11,0.12)] transition" placeholder="you@example.com" />
-          </div>
-          <div>
-            <label class="block text-sm mb-1 text-[color:var(--muted)]">Password</label>
-            <input id="password" type="password" minlength="6" required
-                   class="w-full h-11 px-3 rounded-xl bg-[#12121a] border border-[rgba(255,255,255,0.15)] text-white outline-none focus:border-[rgba(245,158,11,0.7)] focus:ring-4 focus:ring-[rgba(245,158,11,0.12)] transition" placeholder="- - - - - - - - " />
-          </div>
-          <div class="flex items-center justify-between">
-            <label class="flex items-center gap-2 text-sm text-[color:var(--muted)]">
-              <input id="remember" type="checkbox" class="accent-[#F59E0B]" />
-              Remember me
-            </label>
-            <a class="text-sm text-[color:var(--accent)] hover:text-white transition" href="/forgot">Forgot password?</a>
-          </div>
-          <button type="submit" class="btn-primary w-full">Sign In</button>
-        </form>
-
-        <div class="text-sm text-center text-[color:var(--muted)] mt-3">
-          New to AlgoRhythm?
-          <a href="/signup" class="text-[color:var(--accent)] hover:text-white transition">Create an account</a>
+    <!-- Email form -->
+    <div class="tile glass p-4 md:p-5 rounded-xl reveal-right stagger-2">
+      <h2 class="text-lg font-semibold mb-3">Use your email</h2>
+      <form id="emailForm" class="space-y-3" autocomplete="on">
+        <div>
+          <label class="block text-sm mb-1 text-[color:var(--muted)]" for="email">Email</label>
+          <input id="email" type="email" required
+                 class="w-full h-11 px-3 rounded-xl bg-[#12121a] border border-[rgba(255,255,255,0.15)] text-white outline-none focus:border-[rgba(245,158,11,0.7)] focus:ring-4 focus:ring-[rgba(245,158,11,0.12)] transition" placeholder="you@example.com" />
         </div>
+        <div>
+          <label class="block text-sm mb-1 text-[color:var(--muted)]" for="password">Password</label>
+          <input id="password" type="password" minlength="6" required
+                 class="w-full h-11 px-3 rounded-xl bg-[#12121a] border border-[rgba(255,255,255,0.15)] text-white outline-none focus:border-[rgba(245,158,11,0.7)] focus:ring-4 focus:ring-[rgba(245,158,11,0.12)] transition" placeholder="- - - - - - - - " />
+        </div>
+        <div class="flex items-center justify-between">
+          <label class="flex items-center gap-2 text-sm text-[color:var(--muted)]" for="remember">
+            <input id="remember" type="checkbox" class="accent-[#F59E0B]" />
+            Remember me
+          </label>
+          <a class="text-sm text-[color:var(--accent)] hover:text-white transition" href="/forgot">Forgot password?</a>
+        </div>
+        <button type="submit" class="btn-primary w-full">Sign In</button>
+      </form>
+
+      <div class="text-sm text-center text-[color:var(--muted)] mt-3">
+        New to AlgoRhythm?
+        <a href="/signup" class="text-[color:var(--accent)] hover:text-white transition">Create an account</a>
       </div>
     </div>
   </div>
 </div>
-</section> <!-- Footer (optional) --> <footer class="max-w-6xl mx-auto w-full px-4 pb-8 text-center text-xs text-[color:var(--muted)]"> © <span id="year"></span> AlgoRhythm </footer> <script> // Year document.getElementById('year').textContent = new Date().getFullYear(); // Intersection reveal const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom'); const io = new IntersectionObserver((entries)=>{ entries.forEach(entry=>{ if (entry.isIntersecting){ entry.target.classList.add('reveal-active'); io.unobserve(entry.target); } }); }, { threshold: 0.12 }); revealEls.forEach(el=> io.observe(el)); // 3D tilt + sheen on main card const card = document.getElementById('authCard'); let rafId = null; function setMouseVars(e, el){ const rect = el.getBoundingClientRect(); const x = e.clientX - rect.left; const y = e.clientY - rect.top; el.style.setProperty('--mouse-x', x + 'px'); el.style.setProperty('--mouse-y', y + 'px'); const cx = rect.width/2, cy = rect.height/2; const rx = ((y - cy) / cy) * -3; // rotateX const ry = ((x - cx) / cx) * 3; // rotateY cancelAnimationFrame(rafId); rafId = requestAnimationFrame(()=> { el.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`; }); } function resetTilt(el){ el.style.transform = ''; } if (window.matchMedia('(hover:hover) and (pointer:fine)').matches && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) { card?.addEventListener('mousemove', (e)=> setMouseVars(e, card)); card?.addEventListener('mouseleave', ()=> resetTilt(card)); } // Cursor follower glow const follower = document.querySelector('.cursor-follower'); if (follower && !window.matchMedia('(prefers-reduced-motion: reduce)').matches){ let fRaf; let mx=0, my=0; window.addEventListener('mousemove', (e)=>{ mx = e.clientX; my = e.clientY; document.documentElement.style.setProperty('--mouse-x', mx + 'px'); document.documentElement.style.setProperty('--mouse-y', my + 'px'); cancelAnimationFrame(fRaf); fRaf = requestAnimationFrame(()=>{ follower.style.transform = `translate3d(${mx - 40}px, ${my - 40}px, 0)`; }); }, { passive: true }); } // Button loading helper const setLoading = (btn, isLoading) => { if (!btn) return; btn.classList.toggle('btn-loading', isLoading); const prev = btn.getAttribute('data-prev'); if (isLoading) { btn.setAttribute('data-prev', btn.innerHTML); btn.innerHTML = btn.innerText.includes('GitHub') ? 'Connecting to GitHub…' : btn.innerText.includes('Google') ? 'Connecting to Google…' : 'Loading…'; } else if (prev) { btn.innerHTML = prev; btn.removeAttribute('data-prev'); } }; // Centered popup for OAuth function openPopup(url, title='Sign in', w=520, h=620){ const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2); const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2); const opts = `toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${w},height=${h},top=${y},left=${x}`; const popup = window.open(url, title, opts); return popup; } // OAuth handlers — replace redirectUrl with your real routes const btnGoogle = document.getElementById('btnGoogle'); const btnGithub = document.getElementById('btnGithub'); async function oauthFlow(provider, btn){ try{ setLoading(btn, true); // Replace with your integration (NextAuth, Supabase, Clerk, etc.) // Example for NextAuth route: const redirectUrl = `/api/auth/signin/${provider}?callbackUrl=${encodeURIComponent('/dashboard')}`; const pop = openPopup(redirectUrl, `Sign in with ${provider}`); if (!pop || pop.closed || typeof pop.closed === 'undefined') { // Popup blocked: fallback to full redirect window.location.href = redirectUrl; return; } // Poll popup close const poll = setInterval(()=>{ if (pop.closed) { clearInterval(poll); window.location.reload(); } }, 600); } catch (err){ console.error(err); alert('Authentication failed. Please try again.'); } finally { setTimeout(()=> setLoading(btn, false), 1500); } } btnGoogle?.addEventListener('click', ()=> oauthFlow('google', btnGoogle)); btnGithub?.addEventListener('click', ()=> oauthFlow('github', btnGithub)); // Email form demo (replace with real API) document.getElementById('emailForm')?.addEventListener('submit', (e)=>{ e.preventDefault(); const email = document.getElementById('email').value.trim(); const pass = document.getElementById('password').value; if (!email || pass.length < 6){ alert('Enter a valid email and a password with at least 6 characters.'); return; } // TODO: call your backend auth alert('Signed in (demo).'); }); </script> </body> </html>
+</div> </section>
