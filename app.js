@@ -2,6 +2,7 @@ const container = document.getElementById('container');
 const toRegister = document.getElementById('toRegister');
 const toLogin = document.getElementById('toLogin');
 
+// Ensure toggle buttons are type="button" in HTML.
 toRegister?.addEventListener('click', () => {
 container?.classList.add('active');
 });
@@ -37,7 +38,7 @@ container?.classList.remove('active');
 toast('Account created! You can sign in now. (demo)');
 });
 
-// Toast
+// Lightweight toast
 function toast(msg){
 let el = document.querySelector('.toast');
 if (!el){
@@ -58,6 +59,7 @@ el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2200);
 }
 
 // Social OAuth demo handlers (replace with real OAuth)
+// If your HTML still uses id="googleLogin"/"githubLogin" in both forms, switch these selectors to querySelectorAll('#googleLogin') and querySelectorAll('#githubLogin').
 function withLoading(btn, fn){
 return async () => {
 btn.classList.add('is-loading');
@@ -89,7 +91,7 @@ await new Promise(r => setTimeout(r, 900));
 toast(${provider} sign-in complete! (demo));
 }
 
-// Three.js 3D background
+/* Three.js 3D background (same as previous) */
 (() => {
 const canvas = document.getElementById('scene3d');
 if(!canvas || typeof THREE === 'undefined') return;
@@ -141,7 +143,7 @@ group.add(node);
 const bars = new THREE.Group();
 group.add(bars);
 const barMat = new THREE.MeshBasicMaterial({ color: accent, transparent:true, opacity:.9 });
-const BAR_COUNT = 24;
+const BAR_COUNT = 24; // adjust if needed
 for(let i=0;i<BAR_COUNT;i++){
 const w = 0.35, d = 0.35, h = 1.5;
 const bgeo = new THREE.BoxGeometry(w, h, d);
