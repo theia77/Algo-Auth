@@ -1,0 +1,55 @@
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8" /> <meta name="viewport" content="width=device-width, initial-scale=1" /> <title>AlgoRhythm | Sign In</title> <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> <link rel="stylesheet" href="styles.css"> </head> <body> <header class="brand"> <div class="brand__logo">AR</div> <div class="brand__name">AlgoRhythm</div> </header> <div class="container" id="container"> <!-- Forms side --> <section class="form-box login"> <div class="form-box__inner"> <h1>Welcome back</h1> <p>Sign in to keep coding in sync.</p>
+    <form id="loginForm" autocomplete="on">
+      <div class="input-box">
+        <input type="email" id="loginEmail" placeholder="Email" required />
+        <i class="icon">@</i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="loginPassword" placeholder="Password" minlength="6" required />
+        <i class="icon">-  -  - </i>
+      </div>
+      <div class="forgot-link">
+        <a href="#" id="forgotLink">Forgot password?</a>
+      </div>
+      <button type="submit" class="btn primary">Sign In</button>
+    </form>
+
+    <div class="alt">
+      <span>New to AlgoRhythm?</span>
+      <button class="btn ghost" id="toRegister">Create account</button>
+    </div>
+  </div>
+</section>
+
+<section class="form-box register" aria-hidden="true">
+  <div class="form-box__inner">
+    <h1>Create account</h1>
+    <p>Join the flow — share problems, discuss solutions, sync music.</p>
+
+    <form id="registerForm" autocomplete="on">
+      <div class="input-box">
+        <input type="text" id="regName" placeholder="Full name" required />
+        <i class="icon">👤</i>
+      </div>
+      <div class="input-box">
+        <input type="email" id="regEmail" placeholder="Email" required />
+        <i class="icon">@</i>
+      </div>
+      <div class="input-box">
+        <input type="password" id="regPassword" placeholder="Password (min 6 chars)" minlength="6" required />
+        <i class="icon">-  -  - </i>
+      </div>
+
+      <button type="submit" class="btn primary">Sign Up</button>
+    </form>
+
+    <div class="alt">
+      <span>Already have an account?</span>
+      <button class="btn ghost" id="toLogin">Sign in</button>
+    </div>
+  </div>
+</section>
+
+<!-- Decorative / toggle background -->
+<div class="toggle-bg"></div>
+</div> <script src="app.js"></script> </body> </html>
