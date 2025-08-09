@@ -1,156 +1,285 @@
-// Year
-document.getElementById('year').textContent = new Date().getFullYear();
-
-// Toggle controls
 const container = document.getElementById('container');
-document.getElementById('toRegister')?.addEventListener('click', () => container.classList.add('active'));
-document.getElementById('toLogin')?.addEventListener('click', () => container.classList.remove('active'));
+const toRegister = document.getElementById('toRegister');
+const toLogin = document.getElementById('toLogin');
 
-// Demo form handlers (replace with real API calls)
-document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
+toRegister?.addEventListener('click', () => {
+container.classList.add('active');
+});
+toLogin?.addEventListener('click', () => {
+container.classList.remove('active');
+});
+
+// Demo handlers (replace with real API calls)
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+
+loginForm?.addEventListener('submit', (e) => {
 e.preventDefault();
 const email = document.getElementById('loginEmail').value.trim();
 const pass = document.getElementById('loginPassword').value;
-if (!email || pass.length < 6) { alert('Enter a valid email and 6+ char password.'); return; }
-alert('Signed in! (demo)');
+if (!email || pass.length < 6) {
+toast('Please enter a valid email and a password with at least 6 characters.');
+return;
+}
+toast('Signed in! (demo)');
 });
-document.getElementById('registerForm')?.addEventListener('submit', (e)=>{
+
+registerForm?.addEventListener('submit', (e) => {
 e.preventDefault();
 const name = document.getElementById('regName').value.trim();
 const email = document.getElementById('regEmail').value.trim();
 const pass = document.getElementById('regPassword').value;
-if (!name || !email || pass.length < 6) { alert('Please fill all fields.'); return; }
+if (!name || !email || pass.length < 6) {
+toast('Please fill all fields. Password must be at least 6 characters.');
+return;
+}
 container.classList.remove('active');
-alert('Account created! (demo)');
+toast('Account created! You can sign in now. (demo)');
 });
 
-// Social buttons (replace URLs with your real routes or NextAuth signIn)
-const go = (url) => window.location.href = url;
-document.getElementById('loginGoogle')?.addEventListener('click', ()=> go('/api/auth/signin/google?callbackUrl=/dashboard'));
-document.getElementById('loginGithub')?.addEventListener('click', ()=> go('/api/auth/signin/github?callbackUrl=/dashboard'));
-document.getElementById('signupGoogle')?.addEventListener('click', ()=> go('/api/auth/signin/google?callbackUrl=/dashboard'));
-document.getElementById('signupGithub')?.addEventListener('click', ()=> go('/api/auth/signin/github?callbackUrl=/dashboard'));
-
-// 3D background: animated code matrix + music equalizer bars
-(function(){
-const canvas = document.getElementById('bgCanvas');
-if (!canvas) return;
-const ctx = canvas.getContext('2d');
-let w, h, raf;
-const DPR = Math.min(window.devicePixelRatio || 1, 2);
-
-// Code matrix columns
-let cols = [];
-// Music bars
-const bars = 48;
-let barVals = new Array(bars).fill(0);
-
-const codeChars = '01{};<>/\=+-_*#@$%&|'.split('');
-
-function resize(){
-w = canvas.width = Math.floor(innerWidth * DPR);
-h = canvas.height = Math.floor(innerHeight * DPR);
-canvas.style.width = innerWidth + 'px';
-canvas.style.height = innerHeight + 'px';
-
-text
-const colWidth = Math.max(14 * DPR, 10);
-const count = Math.ceil(w / colWidth);
-cols = new Array(count).fill(0).map((_, i)=>({
-  x: i * colWidth + (Math.random()*4-2)*DPR,
-  y: Math.random() * -h,
-  speed: (1.2 + Math.random()*1.6) * DPR,
-  font: `${Math.floor(14*DPR)}px "Poppins", "Inter", monospace`
-}));
+// Lightweight toast
+function toast(msg){
+let el = document.querySelector('.toast');
+if (!el){
+el = document.createElement('div');
+el.className = 'toast';
+Object.assign(el.style, {
+position:'fixed', left:'50%', bottom:'24px', transform:'translateX(-50%)',
+background:'rgba(20,20,28,.9)', color:'#fff', padding:'10px 14px',
+borderRadius:'10px', border:'1px solid #2a2a3a', boxShadow:'0 8px 24px rgba(0,0,0,.4)',
+zIndex:9999, fontFamily:'Poppins, sans-serif', fontSize:'14px'
+});
+document.body.appendChild(el);
 }
-window.addEventListener('resize', resize);
-resize();
+el.textContent = msg;
+el.style.opacity = '1';
+clearTimeout(el._t);
+el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2200);
+}// Social OAuth demo handlers (replace with real OAuth)
+const googleBtns = document.querySelectorAll('#googleLogin');
+const githubBtns = document.querySelectorAll('#githubLogin');
 
-// Smooth random target for bars
-function updateBars(){
-for(let i=0;i<bars;i++){
-const t = Math.sin((performance.now()/700) + i*0.35) * 0.5 + 0.5;
-const rnd = Math.random()0.25;
-const target = (t0.85 + rnd) * 1.0;
-barVals[i] = barVals[i]0.85 + target0.15;
+googleBtns.forEach(btn => {
+  btn.addEventListener('click', async () => {
+    try {
+      // Replace with real OAuth call (see options below)
+      // Example: window.location.href = '/api/auth/google/start';
+      await demoOAuth('Google');
+    } catch (e) {
+      toast('Google sign-in failed.');
+    }
+  });
+});
+
+githubBtns.forEach(btn => {
+  btn.addEventListener('click', async () => {
+    try {
+      // Replace with real OAuth call
+      // Example: window.location.href = '/api/auth/github/start';
+      await demoOAuth('GitHub');
+    } catch (e) {
+      toast('GitHub sign-in failed.');
+    }
+  });
+});
+
+async function demoOAuth(provider){
+  toast(`Redirecting to ${provider}... (demo)`);
+  await new Promise(r => setTimeout(r, 900));
+  toast(`${provider} sign-in complete! (demo)`);
 }
-}
+const container = document.getElementById('container');
+const toRegister = document.getElementById('toRegister');
+const toLogin = document.getElementById('toLogin');
 
-function draw(){
-ctx.clearRect(0,0,w,h);
-  // Subtle vignette
-const grad = ctx.createRadialGradient(w*0.7, h*0.1, 0, w*0.7, h*0.1, Math.max(w,h)*0.9);
-grad.addColorStop(0, 'rgba(245,158,11,0.10)');
-grad.addColorStop(1, 'rgba(0,0,0,0)');
-ctx.fillStyle = grad;
-ctx.fillRect(0,0,w,h);
+toRegister?.addEventListener('click', () => {
+  container.classList.add('active');
+});
+toLogin?.addEventListener('click', () => {
+  container.classList.remove('active');
+});
 
-// Code rain
-cols.forEach(c=>{
-  ctx.font = c.font;
-  ctx.fillStyle = 'rgba(229,231,235,0.18)';
-  const ch = codeChars[(Math.random()*codeChars.length)|0];
-  ctx.fillText(ch, c.x, c.y);
-  c.y += c.speed;
-  if (c.y > h + 40*DPR) {
-    c.y = -Math.random()*h*0.5;
-    c.x += (Math.random()*2-1)*DPR;
+// Demo handlers (replace with real API calls)
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+
+loginForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+  if (!email || pass.length < 6) {
+    toast('Please enter a valid email and a password with at least 6 characters.');
+    return;
   }
+  toast('Signed in! (demo)');
 });
 
-// Music equalizer at bottom
-updateBars();
-const baseY = h - 60*DPR;
-const width = Math.min(w*0.8, 1100*DPR);
-const left = (w - width)/2;
-const gap = 4*DPR;
-const bw = (width - gap*(bars-1)) / bars;
+registerForm?.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPassword').value;
+  if (!name || !email || pass.length < 6) {
+    toast('Please fill all fields. Password must be at least 6 characters.');
+    return;
+  }
+  container.classList.remove('active');
+  toast('Account created! You can sign in now. (demo)');
+});
 
-for(let i=0;i<bars;i++){
-  const v = barVals[i];
-  const bh = (40*DPR) + v*(70*DPR);
-  const x = left + i*(bw+gap);
-  const y = baseY - bh;
-
-  // Glow
-  ctx.fillStyle = 'rgba(245,158,11,0.10)';
-  ctx.fillRect(x, y-6*DPR, bw, bh+12*DPR);
-
-  // Bar
-  const grd = ctx.createLinearGradient(0, y, 0, y+bh);
-  grd.addColorStop(0, '#F59E0B');
-  grd.addColorStop(1, '#D97706');
-  ctx.fillStyle = grd;
-  ctx.fillRect(x, y, bw, bh);
-
-  // Top highlight
-  ctx.fillStyle = 'rgba(255,255,255,0.18)';
-  ctx.fillRect(x, y, bw, 2*DPR);
+// Lightweight toast
+function toast(msg){
+  let el = document.querySelector('.toast');
+  if (!el){
+    el = document.createElement('div');
+    el.className = 'toast';
+    Object.assign(el.style, {
+      position:'fixed', left:'50%', bottom:'24px', transform:'translateX(-50%)',
+      background:'rgba(20,20,28,.9)', color:'#fff', padding:'10px 14px',
+      borderRadius:'10px', border:'1px solid #2a2a3a', boxShadow:'0 8px 24px rgba(0,0,0,.4)',
+      zIndex:9999, fontFamily:'Poppins, sans-serif', fontSize:'14px', transition:'opacity .2s ease'
+    });
+    document.body.appendChild(el);
+  }
+  el.textContent = msg;
+  el.style.opacity = '1';
+  clearTimeout(el._t);
+  el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2200);
 }
 
-raf = requestAnimationFrame(draw);
+// Social OAuth demo handlers (replace with real OAuth)
+// If using backend routes: window.location.href = '/auth/google' or '/auth/github'
+function withLoading(btn, fn){
+  return async () => {
+    btn.classList.add('is-loading');
+    try { await fn(); }
+    finally { btn.classList.remove('is-loading'); }
+  };
 }
-draw();
 
-// Parallax slight tilt on mouse
-let targetTiltX = 0, targetTiltY = 0, tiltX = 0, tiltY = 0;
-function onMove(e){
-const cx = innerWidth/2;
-const cy = innerHeight/2;
-const dx = (e.clientX - cx) / cx;
-const dy = (e.clientY - cy) / cy;
-targetTiltX = dy * 8; // rotateX degrees
-targetTiltY = -dx * 8; // rotateY degrees
-}
-function animateTilt(){
-tiltX += (targetTiltX - tiltX)*0.06;
-tiltY += (targetTiltY - tiltY)*0.06;
-// We’ll simulate parallax by offsetting the canvas context slightly
-// Actual canvas rotation is expensive; instead we translate elements a bit.
-// Already good as is; optional advanced transforms can be added with CSS.
-requestAnimationFrame(animateTilt);
-}
-animateTilt();
+const googleBtns = document.querySelectorAll('#googleLogin');
+const githubBtns = document.querySelectorAll('#githubLogin');
 
-window.addEventListener('mousemove', onMove, { passive:true });
+googleBtns.forEach(btn => {
+  btn.addEventListener('click', withLoading(btn, async () => {
+    // Replace with real call: window.location.href = '/auth/google';
+    await demoOAuth('Google');
+  }));
+});
+
+githubBtns.forEach(btn => {
+  btn.addEventListener('click', withLoading(btn, async () => {
+    // Replace with real call: window.location.href = '/auth/github';
+    await demoOAuth('GitHub');
+  }));
+});
+
+async function demoOAuth(provider){
+  toast(`Redirecting to ${provider}... (demo)`);
+  await new Promise(r => setTimeout(r, 900));
+  toast(`${provider} sign-in complete! (demo)`);
+}
+
+/* Three.js 3D background (Option B) */
+(() => {
+  const canvas = document.getElementById('scene3d');
+  if(!canvas || typeof THREE === 'undefined') return;
+
+  const container = document.getElementById('container');
+  Object.assign(canvas.style, {
+    position:'absolute', inset:'0', zIndex: 1, pointerEvents: 'none'
+  });
+
+  const scene = new THREE.Scene();
+  const accent = 0xffa82e;
+
+  const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
+  camera.position.set(0, 0, 42);
+
+  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:true });
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+
+  function resize(){
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    renderer.setSize(w, h, false);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  scene.fog = new THREE.FogExp2(0x12121a, 0.015);
+
+  const group = new THREE.Group();
+  scene.add(group);
+
+  const geo = new THREE.IcosahedronGeometry(14, 2);
+  const wireMat = new THREE.MeshBasicMaterial({ color: 0x2a2a3a, wireframe:true, transparent:true, opacity:.6 });
+  const mesh = new THREE.Mesh(geo, wireMat);
+  group.add(mesh);
+
+  const verts = geo.attributes.position;
+  const nodeGeo = new THREE.SphereGeometry(0.18, 8, 8);
+  const nodeMat = new THREE.MeshBasicMaterial({ color: accent, transparent:true, opacity:.85 });
+  for(let i=0;i<verts.count;i++){
+    const node = new THREE.Mesh(nodeGeo, nodeMat.clone());
+    node.position.fromBufferAttribute(verts, i);
+    node.position.multiplyScalar(1.02);
+    group.add(node);
+  }
+
+  const bars = new THREE.Group();
+  group.add(bars);
+  const barMat = new THREE.MeshBasicMaterial({ color: accent, transparent:true, opacity:.9 });
+  const BAR_COUNT = 24; // reduce to 16 for lower GPU use
+  for(let i=0;i<BAR_COUNT;i++){
+    const w = 0.35, d = 0.35, h = 1.5;
+    const bgeo = new THREE.BoxGeometry(w, h, d);
+    const bar = new THREE.Mesh(bgeo, barMat.clone());
+    const angle = (i / BAR_COUNT) * Math.PI * 2;
+    const r = 10.5;
+    bar.position.set(Math.cos(angle)*r, Math.sin(angle)*r, -2.5);
+    bars.add(bar);
+  }
+
+  let targetRX = 0, targetRY = 0, rx = 0, ry = 0;
+  window.addEventListener('mousemove', (e)=>{
+    const rect = renderer.domElement.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width;
+    const y = (e.clientY - rect.top) / rect.height;
+    targetRX = (0.5 - y) * 0.6;
+    targetRY = (x - 0.5) * 0.6;
+  }, { passive:true });
+
+  // Reduced motion: optionally disable animation via media query
+  const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let t = 0;
+  let running = true;
+  document.addEventListener('visibilitychange', ()=>{
+    running = !document.hidden;
+  });
+
+  function animate(){
+    requestAnimationFrame(animate);
+    if(!running || prefersReduced) return;
+
+    const dt = 0.016;
+    t += dt;
+
+    rx += (targetRX - rx) * 0.06;
+    ry += (targetRY - ry) * 0.06;
+    group.rotation.x = rx + Math.sin(t*0.2)*0.02;
+    group.rotation.y = ry + Math.cos(t*0.15)*0.02;
+
+    bars.children.forEach((bar, i) => {
+      const base = 1.0 + Math.sin(t*2 + i*0.5)*0.6 + Math.sin(t*1.3 + i*0.27)*0.3;
+      const h = THREE.MathUtils.clamp(base, 0.4, 2.8);
+      bar.scale.y = h;
+    });
+
+    renderer.render(scene, camera);
+  }
+  animate();
 })();
