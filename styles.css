@@ -1,4 +1,3 @@
-
 :root{
 --bg-1: #0b0b0f;
 --bg-2: #12121a;
@@ -60,6 +59,7 @@ overflow: hidden;
 isolation: isolate;
 }
 
+/* Background glow panel */
 .toggle-bg{
 position: absolute;
 inset: 0;
@@ -71,7 +71,7 @@ z-index: 1;
 pointer-events: none;
 }
 
-/* Layer order */
+/* Keep forms above canvas */
 .form-box{ z-index:2; }
 .toggle-bg{ z-index:1; }
 #scene3d{ z-index:0; }
@@ -98,11 +98,12 @@ box-shadow: var(--shadow);
 backdrop-filter: blur(6px);
 }
 
-.form-box.login{ left: 0; transform: translateX(0); }
-.form-box.register{ right: 0; transform: translateX(0); opacity: .08; pointer-events: none; }
+/* Start states: make the movement clear */
+.form-box.login{ left: 0; transform: translateX(0); opacity: 1; pointer-events: auto; }
+.form-box.register{ right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
 
-.container.active .form-box.login{ transform: translateX(-6%); opacity: .08; pointer-events: none; }
-.container.active .form-box.register{ transform: translateX(6%); opacity: 1; pointer-events: auto; }
+.container.active .form-box.login{ transform: translateX(-20%); opacity: .2; pointer-events: none; }
+.container.active .form-box.register{ transform: translateX(0); opacity: 1; pointer-events: auto; }
 
 /* Headings and text */
 .form-box h1{
@@ -193,7 +194,7 @@ color: var(--muted);
 font-size: 14px;
 }
 
-/* Social auth */
+/* Social auth styles (unchanged look) */
 .social-auth{
 display: grid;
 gap: 10px;
@@ -260,7 +261,7 @@ pointer-events: auto !important;
 .form-box h1{ font-size: 24px; }
 }
 
-/* Loading state */
+/* Optional loading state for buttons */
 .btn.is-loading{
 opacity: .7;
 pointer-events: none;
@@ -275,3 +276,4 @@ margin-left: 8px;
 animation: spin .8s linear infinite;
 }
 @keyframes spin{ to{ transform: rotate(360deg); } }
+
