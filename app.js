@@ -1,158 +1,156 @@
-// Intersection reveal
-(function(){
-const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-zoom');
-if (!('IntersectionObserver' in window)) {
-revealEls.forEach(el => el.classList.add('reveal-active'));
-return;
-}
-const io = new IntersectionObserver(entries=>{
-entries.forEach(entry=>{
-if (entry.isIntersecting){
-entry.target.classList.add('reveal-active');
-io.unobserve(entry.target);
-}
+// Year
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// Toggle controls
+const container = document.getElementById('container');
+document.getElementById('toRegister')?.addEventListener('click', () => container.classList.add('active'));
+document.getElementById('toLogin')?.addEventListener('click', () => container.classList.remove('active'));
+
+// Demo form handlers (replace with real API calls)
+document.getElementById('loginForm')?.addEventListener('submit', (e)=>{
+e.preventDefault();
+const email = document.getElementById('loginEmail').value.trim();
+const pass = document.getElementById('loginPassword').value;
+if (!email || pass.length < 6) { alert('Enter a valid email and 6+ char password.'); return; }
+alert('Signed in! (demo)');
 });
-}, { threshold: 0.12 });
-revealEls.forEach(el=> io.observe(el));
-})();
+document.getElementById('registerForm')?.addEventListener('submit', (e)=>{
+e.preventDefault();
+const name = document.getElementById('regName').value.trim();
+const email = document.getElementById('regEmail').value.trim();
+const pass = document.getElementById('regPassword').value;
+if (!name || !email || pass.length < 6) { alert('Please fill all fields.'); return; }
+container.classList.remove('active');
+alert('Account created! (demo)');
+});
 
-// 3D tilt + sheen on main auth card
+// Social buttons (replace URLs with your real routes or NextAuth signIn)
+const go = (url) => window.location.href = url;
+document.getElementById('loginGoogle')?.addEventListener('click', ()=> go('/api/auth/signin/google?callbackUrl=/dashboard'));
+document.getElementById('loginGithub')?.addEventListener('click', ()=> go('/api/auth/signin/github?callbackUrl=/dashboard'));
+document.getElementById('signupGoogle')?.addEventListener('click', ()=> go('/api/auth/signin/google?callbackUrl=/dashboard'));
+document.getElementById('signupGithub')?.addEventListener('click', ()=> go('/api/auth/signin/github?callbackUrl=/dashboard'));
+
+// 3D background: animated code matrix + music equalizer bars
 (function(){
-const card = document.getElementById('authCard');
-if (!card) return;
+const canvas = document.getElementById('bgCanvas');
+if (!canvas) return;
+const ctx = canvas.getContext('2d');
+let w, h, raf;
+const DPR = Math.min(window.devicePixelRatio || 1, 2);
 
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-const canHover = window.matchMedia('(hover:hover) and (pointer:fine)').matches;
-if (!canHover || prefersReduced) return;
+// Code matrix columns
+let cols = [];
+// Music bars
+const bars = 48;
+let barVals = new Array(bars).fill(0);
 
-let rafId = null;
-function setMouseVars(e){
-const rect = card.getBoundingClientRect();
-const x = e.clientX - rect.left;
-const y = e.clientY - rect.top;
-card.style.setProperty('--mouse-x', x + 'px');
-card.style.setProperty('--mouse-y', y + 'px');
+const codeChars = '01{};<>/\=+-_*#@$%&|'.split('');
+
+function resize(){
+w = canvas.width = Math.floor(innerWidth * DPR);
+h = canvas.height = Math.floor(innerHeight * DPR);
+canvas.style.width = innerWidth + 'px';
+canvas.style.height = innerHeight + 'px';
 
 text
-const cx = rect.width / 2, cy = rect.height / 2;
-const rx = ((y - cy) / cy) * -3;  // rotateX
-const ry = ((x - cx) / cx) * 3;   // rotateY
-
-cancelAnimationFrame(rafId);
-rafId = requestAnimationFrame(()=>{
-  card.style.transform = `perspective(1000px) rotateX(${rx}deg) rotateY(${ry}deg) translateZ(8px)`;
-});
+const colWidth = Math.max(14 * DPR, 10);
+const count = Math.ceil(w / colWidth);
+cols = new Array(count).fill(0).map((_, i)=>({
+  x: i * colWidth + (Math.random()*4-2)*DPR,
+  y: Math.random() * -h,
+  speed: (1.2 + Math.random()*1.6) * DPR,
+  font: `${Math.floor(14*DPR)}px "Poppins", "Inter", monospace`
+}));
 }
-function resetTilt(){ card.style.transform = ''; }
+window.addEventListener('resize', resize);
+resize();
 
-card.addEventListener('mousemove', setMouseVars);
-card.addEventListener('mouseleave', resetTilt);
-})();
-
-// Cursor follower glow
-(function(){
-const follower = document.querySelector('.cursor-follower');
-if (!follower) return;
-const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-if (prefersReduced) return;
-
-let fRaf;
-window.addEventListener('mousemove', (e)=>{
-const mx = e.clientX, my = e.clientY;
-document.documentElement.style.setProperty('--mouse-x', mx + 'px');
-document.documentElement.style.setProperty('--mouse-y', my + 'px');
-cancelAnimationFrame(fRaf);
-fRaf = requestAnimationFrame(()=>{
-follower.style.transform = translate3d(${mx - 40}px, ${my - 40}px, 0);
-});
-}, { passive: true });
-})();
-
-// Year in footer (optional)
-(function(){
-const y = document.getElementById('year');
-if (y) y.textContent = new Date().getFullYear();
-})();
-
-// Button loading helper
-function setLoading(btn, isLoading){
-if (!btn) return;
-btn.classList.toggle('btn-loading', isLoading);
-const prev = btn.getAttribute('data-prev');
-if (isLoading) {
-btn.setAttribute('data-prev', btn.innerHTML);
-const txt = btn.innerText;
-btn.innerHTML = txt.includes('GitHub') ? 'Connecting to GitHub…' :
-txt.includes('Google') ? 'Connecting to Google…' : 'Loading…';
-} else if (prev) {
-btn.innerHTML = prev;
-btn.removeAttribute('data-prev');
+// Smooth random target for bars
+function updateBars(){
+for(let i=0;i<bars;i++){
+const t = Math.sin((performance.now()/700) + i*0.35) * 0.5 + 0.5;
+const rnd = Math.random()0.25;
+const target = (t0.85 + rnd) * 1.0;
+barVals[i] = barVals[i]0.85 + target0.15;
 }
 }
 
-// Centered popup for OAuth (fallback to redirect if blocked)
-function openPopup(url, title='Sign in', w=520, h=620){
-const y = window.top.outerHeight / 2 + window.top.screenY - (h / 2);
-const x = window.top.outerWidth / 2 + window.top.screenX - (w / 2);
-const opts = toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=${w},height=${h},top=${y},left=${x};
-return window.open(url, title, opts);
-}
+function draw(){
+ctx.clearRect(0,0,w,h);
+  // Subtle vignette
+const grad = ctx.createRadialGradient(w*0.7, h*0.1, 0, w*0.7, h*0.1, Math.max(w,h)*0.9);
+grad.addColorStop(0, 'rgba(245,158,11,0.10)');
+grad.addColorStop(1, 'rgba(0,0,0,0)');
+ctx.fillStyle = grad;
+ctx.fillRect(0,0,w,h);
 
-// OAuth handlers — replace redirectUrl with your real routes
-(function(){
-const btnGoogle = document.getElementById('btnGoogle');
-const btnGithub = document.getElementById('btnGithub');
-
-async function oauthFlow(provider, btn){
-try{  // Replace this with your stack:
-  // NextAuth example: /api/auth/signin/google?callbackUrl=/dashboard
-  // Clerk/Auth0/Supabase/Firebase: use their SDK or correct route
-  const redirectUrl = `/api/auth/signin/${provider}?callbackUrl=${encodeURIComponent('/dashboard')}`;
-
-  const pop = openPopup(redirectUrl, `Sign in with ${provider}`);
-  if (!pop || pop.closed || typeof pop.closed === 'undefined') {
-    // Popup blocked — redirect
-    window.location.href = redirectUrl;
-    return;
+// Code rain
+cols.forEach(c=>{
+  ctx.font = c.font;
+  ctx.fillStyle = 'rgba(229,231,235,0.18)';
+  const ch = codeChars[(Math.random()*codeChars.length)|0];
+  ctx.fillText(ch, c.x, c.y);
+  c.y += c.speed;
+  if (c.y > h + 40*DPR) {
+    c.y = -Math.random()*h*0.5;
+    c.x += (Math.random()*2-1)*DPR;
   }
-
-  // Poll for popup close (provider completes and closes)
-  const poll = setInterval(()=>{
-    if (pop.closed) {
-      clearInterval(poll);
-      window.location.reload();
-    }
-  }, 600);
-} catch (err){
-  console.error(err);
-  alert('Authentication failed. Please try again.');
-} finally {
-  // brief delay to avoid flicker if popup closes fast
-  setTimeout(()=> setLoading(btn, false), 1200);
-}
-}
-
-btnGoogle?.addEventListener('click', ()=> oauthFlow('google', btnGoogle));
-btnGithub?.addEventListener('click', ()=> oauthFlow('github', btnGithub));
-})();
-
-// Email sign-in demo (replace with real API call)
-(function(){
-const form = document.getElementById('emailForm');
-if (!form) return;
-form.addEventListener('submit', async (e)=>{
-e.preventDefault();
-const email = document.getElementById('email')?.value.trim();
-const pass = document.getElementById('password')?.value;
-if (!email || !pass || pass.length < 6){
-alert('Enter a valid email and a password with at least 6 characters.');
-return;
-}
-// TODO: Replace with your API call
-// Example:
-// const res = await fetch('/api/login', { method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify({ email, password: pass, remember: document.getElementById('remember')?.checked })});
-// if (res.ok) location.href = '/dashboard'; else alert('Invalid credentials');
-alert('Signed in (demo).');
 });
+
+// Music equalizer at bottom
+updateBars();
+const baseY = h - 60*DPR;
+const width = Math.min(w*0.8, 1100*DPR);
+const left = (w - width)/2;
+const gap = 4*DPR;
+const bw = (width - gap*(bars-1)) / bars;
+
+for(let i=0;i<bars;i++){
+  const v = barVals[i];
+  const bh = (40*DPR) + v*(70*DPR);
+  const x = left + i*(bw+gap);
+  const y = baseY - bh;
+
+  // Glow
+  ctx.fillStyle = 'rgba(245,158,11,0.10)';
+  ctx.fillRect(x, y-6*DPR, bw, bh+12*DPR);
+
+  // Bar
+  const grd = ctx.createLinearGradient(0, y, 0, y+bh);
+  grd.addColorStop(0, '#F59E0B');
+  grd.addColorStop(1, '#D97706');
+  ctx.fillStyle = grd;
+  ctx.fillRect(x, y, bw, bh);
+
+  // Top highlight
+  ctx.fillStyle = 'rgba(255,255,255,0.18)';
+  ctx.fillRect(x, y, bw, 2*DPR);
+}
+
+raf = requestAnimationFrame(draw);
+}
+draw();
+
+// Parallax slight tilt on mouse
+let targetTiltX = 0, targetTiltY = 0, tiltX = 0, tiltY = 0;
+function onMove(e){
+const cx = innerWidth/2;
+const cy = innerHeight/2;
+const dx = (e.clientX - cx) / cx;
+const dy = (e.clientY - cy) / cy;
+targetTiltX = dy * 8; // rotateX degrees
+targetTiltY = -dx * 8; // rotateY degrees
+}
+function animateTilt(){
+tiltX += (targetTiltX - tiltX)*0.06;
+tiltY += (targetTiltY - tiltY)*0.06;
+// We’ll simulate parallax by offsetting the canvas context slightly
+// Actual canvas rotation is expensive; instead we translate elements a bit.
+// Already good as is; optional advanced transforms can be added with CSS.
+requestAnimationFrame(animateTilt);
+}
+animateTilt();
+
+window.addEventListener('mousemove', onMove, { passive:true });
 })();
-setLoading(btn, true);
