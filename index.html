@@ -7,7 +7,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <!-- Three.js must load before app.js -->
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
@@ -17,44 +16,23 @@
   </header>
 
   <div class="container" id="container">
-    <!-- Decorative / toggle background -->
     <div class="toggle-bg"></div>
-
-    <!-- Three.js canvas (background) -->
     <canvas id="scene3d" aria-hidden="true"></canvas>
 
-    <!-- Login form -->
+    <!-- Login -->
     <section class="form-box login" aria-hidden="false">
       <div class="form-box__inner">
         <h1>Welcome back</h1>
         <p>Sign in to keep coding in sync.</p>
 
         <form id="loginForm" autocomplete="on">
-          <!-- Social sign-in -->
-          <div class="social-auth">
-            <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.9 31.7 29.4 35 24 35c-6.6 0-12-5.4-12-12s5.4-12 12-12c3 0 5.7 1.1 7.8 3l5.7-5.7C33.6 5.1 28.9 3 24 3 12.4 3 3 12.4 3 24s9.4 21 21 21c10.5 0 20-7.6 20-21 0-1.2-.1-2.4-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 16.3 18.9 13 24 13c3 0 5.7 1.1 7.8 3l5.7-5.7C33.6 5.1 28.9 3 24 3 16 3 9.2 7.6 6.3 14.7z"/><path fill="#4CAF50" d="M24 45c5.3 0 10.1-2 13.6-5.2l-6.3-5.2C29.4 35 26.9 36 24 36c-5.3 0-9.8-3.3-11.4-8l-6.6 5.1C8.9 40.4 15.9 45 24 45z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.3 3.8-4.9 7-9.3 7-5.3 0-9.8-3.3-11.4-8l-6.6 5.1C8.9 40.4 15.9 45 24 45c10.5 0 20-7.6 20-21 0-1.2-.1-2.4-.4-3.5z"/></svg>
-              <span>Continue with Google</span>
-            </button>
-
-            <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
-              <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5A11.5 11.5 0 0 0 .5 12.3c0 5.2 3.4 9.6 8.2 11.1.6.1.8-.3.8-.6v-2c-3.3.7-4-1.4-4-1.4-.6-1.4-1.5-1.8-1.5-1.8-1.2-.8.1-.8.1-.8 1.3.1 2 1.4 2 1.4 1.2 2 3.1 1.4 3.8 1 .1-.9.5-1.4.9-1.8-2.7-.3-5.6-1.4-5.6-6.2 0-1.4.5-2.5 1.3-3.4-.1-.3-.6-1.7.1-3.5 0 0 1.1-.4 3.6 1.3a12.3 12.3 0 0 1 6.6 0c2.5-1.7 3.6-1.3 3.6-1.3.7 1.8.2 3.2.1 3.5.8.9 1.3 2 1.3 3.4 0 4.8-2.9 5.9-5.6 6.2.5.4 1 1.3 1.1 2v3c0 .3.2.7.9.6 4.8-1.5 8.2-5.9 8.2-11.1A11.5 11.5 0 0 0 12 .5z"/></svg>
-              <span>Continue with GitHub</span>
-            </button>
-
-            <div class="divider" role="separator" aria-label="or">or</div>
-          </div>
-
           <div class="input-box">
             <input type="email" id="loginEmail" placeholder="Email" required />
             <i class="icon">@</i>
           </div>
           <div class="input-box">
             <input type="password" id="loginPassword" placeholder="Password" minlength="6" required />
-            <i class="icon">-  -  - </i>
-          </div>
-          <div class="forgot-link">
-            <a href="#" id="forgotLink">Forgot password?</a>
+            <i class="icon">- - - </i>
           </div>
           <button type="submit" class="btn primary">Sign In</button>
         </form>
@@ -66,29 +44,13 @@
       </div>
     </section>
 
-    <!-- Register form -->
+    <!-- Register -->
     <section class="form-box register" aria-hidden="true">
       <div class="form-box__inner">
         <h1>Create account</h1>
         <p>Join the flow — share problems, discuss solutions, sync music.</p>
 
         <form id="registerForm" autocomplete="on">
-
-          <!-- Social sign-in -->
-          <div class="social-auth">
-            <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
-              <!-- Google SVG omitted for brevity -->
-              <span>Continue with Google</span>
-            </button>
-
-            <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
-              <!-- GitHub SVG omitted for brevity -->
-              <span>Continue with GitHub</span>
-            </button>
-
-            <div class="divider" role="separator" aria-label="or">or</div>
-          </div>
-
           <div class="input-box">
             <input type="text" id="regName" placeholder="Full name" required />
             <i class="icon">👤</i>
@@ -99,12 +61,12 @@
           </div>
           <div class="input-box">
             <input type="password" id="regPassword" placeholder="Password (min 6 chars)" minlength="6" required />
-            <i class="icon">-  -  - </i>
+            <i class="icon">- - - </i>
           </div>
-
           <button type="submit" class="btn primary">Sign Up</button>
         </form>
 
+        <!-- Back to sign-in option -->
         <div class="alt">
           <span>Already have an account?</span>
           <button class="btn ghost" id="toLogin" type="button">Sign in</button>
