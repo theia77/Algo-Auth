@@ -2,12 +2,19 @@ const container = document.getElementById('container');
 const toRegister = document.getElementById('toRegister');
 const toLogin = document.getElementById('toLogin');
 
-// Slide toggle
+// Slide toggle between login and register form
 toRegister?.addEventListener('click', () => {
-  container?.classList.add('active');
+  container.classList.add('active');
+  // Accessibility: show register, hide login
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'false');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'true');
 });
+
 toLogin?.addEventListener('click', () => {
-  container?.classList.remove('active');
+  container.classList.remove('active');
+  // Accessibility: show login, hide register
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'true');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'false');
 });
 
 // Demo handlers (replace with real API calls)
@@ -34,11 +41,15 @@ registerForm?.addEventListener('submit', (e) => {
     toast('Please fill all fields. Password must be at least 6 characters.');
     return;
   }
-  container?.classList.remove('active');
+  container.classList.remove('active');
+  // Accessibility update
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'true');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'false');
+
   toast('Account created! You can sign in now. (demo)');
 });
 
-// Toast
+// Toast helper function
 function toast(msg){
   let el = document.querySelector('.toast');
   if (!el){
@@ -88,7 +99,7 @@ async function demoOAuth(provider){
   toast(`${provider} sign-in complete! (demo)`);
 }
 
-/* Three.js 3D background */
+/* Three.js 3D background initialization below remains unchanged */
 (() => {
   const canvas = document.getElementById('scene3d');
   if(!canvas || typeof THREE === 'undefined') return;
