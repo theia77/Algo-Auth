@@ -19,7 +19,6 @@ const registerForm = document.getElementById('registerForm');
 
 loginForm?.addEventListener('submit', e => {
   e.preventDefault();
-  // Validation can go here
   toast('Signed in! (demo)');
 });
 registerForm?.addEventListener('submit', e => {
@@ -123,7 +122,6 @@ function toast(msg){
   }, { passive:true });
 
   const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
   let t = 0;
   let running = true;
   document.addEventListener('visibilitychange', ()=>{
