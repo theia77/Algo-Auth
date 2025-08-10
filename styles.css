@@ -1,3 +1,5 @@
+*, *::before, *::after { box-sizing: border-box; }
+
 :root {
   --bg-1: #0b0b0f;
   --bg-2: #12121a;
@@ -12,7 +14,6 @@
 html, body {
   height: 100%;
   margin: 0;
-  padding: 0;
   overflow: hidden;
 }
 
@@ -20,190 +21,99 @@ body {
   font-family: "Poppins", sans-serif;
   background: radial-gradient(1000px 600px at 70% -10%, rgba(255,168,46,.15), transparent 60%),
               linear-gradient(90deg, var(--bg-1), var(--bg-2));
-  color: var(--text);
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .brand {
   position: absolute;
-  top: 24px;
-  left: 32px;
-  display: flex;
-  gap: 12px;
-  z-index: 11;
+  top: 20px; left: 20px;
+  display: flex; gap: 10px;
+  align-items: center;
+  z-index: 10;
 }
 .brand__logo {
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  width: 38px; height: 38px; border-radius: 9px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; font-weight: 800; color: #251a00;
-  box-shadow: 0 8px 24px rgba(255,168,46,.28);
+  padding: 8px;
+  border-radius: 8px;
+  font-weight: bold;
 }
-.brand__name {
-  font-weight: bold; font-size: 22px; color: var(--text);
-  letter-spacing: 0.7px;
-}
+.brand__name { font-weight: bold; font-size: 20px; color: var(--text); }
 
-/* Full screen container */
 .container {
   position: relative;
   width: 100vw;
   height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
 }
 
-.toggle-bg {
+#scene3d, .toggle-bg {
   position: absolute;
   inset: 0;
-  z-index: 1;
 }
 
-#scene3d {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-}
-
-/* Panel styles */
 .form-box {
-  z-index: 3;
   position: absolute;
   top: 0;
-  width: 50vw;
-  min-width: 320px;
-  height: 100vh;
-  padding: 0;
+  width: 50%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
-  transition: transform 0.7s cubic-bezier(.55,.07,.52,.55), opacity 0.35s cubic-bezier(.4,0,.2,1);
+  justify-content: center;
+  transition: transform 0.7s ease, opacity 0.35s ease;
 }
-
 .form-box__inner {
-  width: 100%;
-  max-width: 400px;
   background: rgba(255,255,255,0.018);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--outline);
   border-radius: 18px;
-  padding: 34px 32px 32px 32px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(8px);
+  padding: 30px;
+  width: 100%;
+  max-width: 380px;
 }
-
-.form-box.login { left: 0; transform: translateX(0); opacity: 1; }
-.form-box.register { right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
-
-.container.active .form-box.login { transform: translateX(-20%); opacity: 0.2; pointer-events: none; }
-.container.active .form-box.register { transform: translateX(0); opacity: 1; pointer-events: auto; }
-
-.form-box h1 {
-  font-size: 30px;
-  line-height: 1.18;
-  margin-bottom: 8px;
-}
-.form-box p {
-  color: var(--muted);
-  font-size: 15px;
-  margin-bottom: 22px;
-}
-
-/* Inputs & icons */
-.input-box { position: relative; margin: 18px 0 0 0; }
+.input-box { margin-top: 16px; width: 100%; }
 .input-box input {
   width: 100%;
+  min-width: 0;
+  padding: 0 44px 0 12px;
   height: 48px;
   border-radius: 12px;
   border: 1px solid var(--outline);
   background: #15151a;
   color: var(--text);
-  padding: 0 44px 0 12px;
-  font-size: 16px;
-  transition: border-color .18s, box-shadow .18s;
 }
-.input-box input:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(255,168,46,.13);
-  background: #16161e;
-}
-.input-box .icon {
+.icon {
   position: absolute;
-  right: 15px; top: 49%;
+  right: 14px; top: 50%;
   transform: translateY(-50%);
-  font-size: 15px;
-  color: #a6a8b4;
-  pointer-events: none;
+  font-size: 14px;
+  color: #aaa;
 }
 
-/* Buttons */
 .btn {
   border: none;
-  cursor: pointer;
   border-radius: 12px;
-  font-weight: 600;
-  transition: box-shadow .15s, background .12s;
-  outline: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 .btn.primary {
   width: 100%;
-  height: 48px;
-  margin-top: 28px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   color: #1e1400;
-  box-shadow: 0 10px 28px rgba(255,168,46,.38), inset 0 1px rgba(255,255,255,.17);
+  height: 48px;
+  margin-top: 24px;
 }
-.btn.primary:hover {
-  box-shadow: 0 14px 36px rgba(255,168,46,.48);
-}
-
 .btn.ghost {
-  padding: 10px 14px;
+  border: 1px solid var(--accent);
   background: transparent;
-  border: 1px solid var(--accent-2);
-  color: var(--accent);
+  color: var(--accent-2);
+  padding: 8px 14px;
 }
-.btn.ghost:hover {
-  background: rgba(255,168,46,.10);
-  border-color: var(--accent);
+.alt { margin-top: 16px; display: flex; gap: 8px; font-size: 14px; color: var(--muted); }
+
+.form-box.login { left: 0; transform: translateX(0); opacity: 1; }
+.form-box.register { right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
+.container.active .form-box.login { transform: translateX(-20%); opacity: 0.2; pointer-events: none; }
+.container.active .form-box.register { transform: translateX(0); opacity: 1; pointer-events: auto; }
+
+@media (max-width: 900px) {
+  .form-box { position: relative; width: 100%; height: auto; opacity: 1 !important; transform: none !important; }
+  .form-box + .form-box { margin-top: 20px; }
 }
-
-.alt {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 14px;
-}
-
-/* Responsive: on small screens, stack the panels */
-@media (max-width:900px) {
-  .container { height: auto; }
-  .form-box {
-    position: relative;
-    width: 100vw;
-    height: auto;
-    min-width: 0;
-    transform: none !important;
-    opacity: 1 !important;
-    top: 0;
-    pointer-events: auto !important;
-    box-sizing: border-box;
-  }
-  .form-box + .form-box { margin-top: 24px; }
-  .form-box__inner { border-radius: 14px; padding: 22px; }
-}
-
-/* Hide scrollbars, if any */
-::-webkit-scrollbar { width: 0 !important; height: 0 !important; }
-
-/* You can paste your loading state/button spinner CSS here if needed */
