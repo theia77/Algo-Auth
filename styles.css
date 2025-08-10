@@ -83,8 +83,7 @@ body{
   display: grid;
   place-items: center;
   transform-style: preserve-3d;
-  /* Enable hardware acceleration */
-  transform: translateZ(0);
+  transform: translateZ(0); /* hardware acceleration */
 }
 
 .toggle-bg{ z-index:1; }
@@ -94,8 +93,16 @@ body{
 .form-box.login{ left: 0; transform: translateX(0); opacity: 1; pointer-events: auto; }
 .form-box.register{ right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
 
-.container.active .form-box.login{ transform: translateX(-20%); opacity: 0.2; pointer-events: none; }
-.container.active .form-box.register{ transform: translateX(0); opacity: 1; pointer-events: auto; }
+.container.active .form-box.login {
+  transform: translateX(-20%);
+  opacity: 0.2;
+  pointer-events: none;
+}
+.container.active .form-box.register {
+  transform: translateX(0);
+  opacity: 1;
+  pointer-events: auto;
+}
 
 /* Headings and text */
 .form-box h1{
