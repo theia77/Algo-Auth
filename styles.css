@@ -72,12 +72,9 @@ body{
 }
 
 /* Keep forms above canvas */
-.form-box{ z-index:2; }
-.toggle-bg{ z-index:1; }
-#scene3d{ z-index:0; }
-
-/* Panels + transitions */
-.form-box{
+.form-box{ 
+  z-index:2; 
+  transition: transform 0.7s ease, opacity 0.35s ease;
   position: absolute;
   top: 0;
   width: 50%;
@@ -85,24 +82,19 @@ body{
   padding: 34px;
   display: grid;
   place-items: center;
-  transition: transform .7s ease, opacity .35s ease;
-}
-.form-box__inner{
-  width: 100%;
-  max-width: 420px;
-  background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
-  border: 1px solid var(--outline);
-  border-radius: 22px;
-  padding: 28px;
-  box-shadow: var(--shadow);
-  backdrop-filter: blur(6px);
+  transform-style: preserve-3d;
+  /* Enable hardware acceleration */
+  transform: translateZ(0);
 }
 
-/* Slide behavior */
+.toggle-bg{ z-index:1; }
+#scene3d{ z-index:0; }
+
+/* Positions and sliding */
 .form-box.login{ left: 0; transform: translateX(0); opacity: 1; pointer-events: auto; }
 .form-box.register{ right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
 
-.container.active .form-box.login{ transform: translateX(-20%); opacity: .2; pointer-events: none; }
+.container.active .form-box.login{ transform: translateX(-20%); opacity: 0.2; pointer-events: none; }
 .container.active .form-box.register{ transform: translateX(0); opacity: 1; pointer-events: auto; }
 
 /* Headings and text */
