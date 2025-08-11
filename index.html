@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AlgoRhythm | Sign In</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlgoRhythm | Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
   <header class="brand">
@@ -14,7 +15,7 @@
   </header>
 
   <div class="container" id="container">
-    <canvas id="matrix-bg" aria-hidden="true"></canvas>
+    <canvas id="starfield-canvas" aria-hidden="true"></canvas>
 
     <!-- LOGIN -->
     <section class="form-box login" aria-hidden="false">
@@ -22,7 +23,6 @@
         <h1>Welcome back</h1>
         <p>Sign in to keep coding in sync.</p>
 
-        <!-- Social -->
         <div class="social-auth">
           <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
             <span>Continue with Google</span>
@@ -57,7 +57,6 @@
         <h1>Create account</h1>
         <p>Join the flow — share problems, discuss solutions, sync music.</p>
 
-        <!-- Social -->
         <div class="social-auth">
           <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
             <span>Continue with Google</span>
@@ -90,6 +89,6 @@
       </div>
     </section>
   </div>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
