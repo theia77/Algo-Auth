@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>AlgoRhythm | Sign In</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css" />
   <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
@@ -15,9 +15,9 @@
   </header>
 
   <div class="container" id="container">
-    <canvas id="starfield-canvas" aria-hidden="true"></canvas>
+    <canvas id="wave-bg" aria-hidden="true"></canvas>
 
-    <!-- LOGIN -->
+    <!-- LOGIN PANEL -->
     <section class="form-box login" aria-hidden="false">
       <div class="form-box__inner">
         <h1>Welcome back</h1>
@@ -44,14 +44,15 @@
           </div>
           <button type="submit" class="btn primary">Sign In</button>
         </form>
+
         <div class="alt">
           <span>New to AlgoRhythm?</span>
-          <button class="btn ghost" id="toRegister" type="button">Create account</button>
+          <button class="btn ghost" id="toRegister">Create account</button>
         </div>
       </div>
     </section>
 
-    <!-- REGISTER -->
+    <!-- REGISTER PANEL -->
     <section class="form-box register" aria-hidden="true">
       <div class="form-box__inner">
         <h1>Create account</h1>
@@ -82,13 +83,15 @@
           </div>
           <button type="submit" class="btn primary">Sign Up</button>
         </form>
+
         <div class="alt">
           <span>Already have an account?</span>
-          <button class="btn ghost" id="toLogin" type="button">Sign in</button>
+          <button class="btn ghost" id="toLogin">Sign in</button>
         </div>
       </div>
     </section>
   </div>
+
   <script src="app.js"></script>
 </body>
 </html>
