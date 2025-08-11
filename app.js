@@ -2,9 +2,13 @@ const container = document.getElementById('container');
 
 document.getElementById('toRegister')?.addEventListener('click', () => {
   container.classList.add('active');
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'false');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'true');
 });
 document.getElementById('toLogin')?.addEventListener('click', () => {
   container.classList.remove('active');
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'true');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'false');
 });
 
 document.getElementById('loginForm')?.addEventListener('submit', e => {
@@ -14,6 +18,8 @@ document.getElementById('loginForm')?.addEventListener('submit', e => {
 document.getElementById('registerForm')?.addEventListener('submit', e => {
   e.preventDefault();
   container.classList.remove('active');
+  document.querySelector('.form-box.register').setAttribute('aria-hidden', 'true');
+  document.querySelector('.form-box.login').setAttribute('aria-hidden', 'false');
   toast('Account created! (demo)');
 });
 
@@ -35,7 +41,7 @@ function toast(msg){
   el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2000);
 }
 
-// Social buttons demo
+// Social button handlers (demo)
 function withLoading(btn, fn) {
   return async () => {
     btn.classList.add('is-loading');
@@ -43,7 +49,6 @@ function withLoading(btn, fn) {
     finally { btn.classList.remove('is-loading'); }
   };
 }
-
 document.querySelectorAll('.googleLogin').forEach(btn => {
   btn.addEventListener('click', withLoading(btn, async () => {
     toast('Redirecting to Google... (demo)');
@@ -59,7 +64,7 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
   }));
 });
 
-// MATRIX RAIN + EQ BARS (slow speed)
+// MATRIX RAIN + EQ BARS
 (() => {
   const cols = 60;
   const fontSize = 18;
@@ -71,9 +76,7 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
   const drops = Array(cols).fill(1);
   const eqBars = Array(cols).fill(1);
 
-  function randChar() {
-    return chars[Math.floor(Math.random()*chars.length)];
-  }
+  function randChar() { return chars[Math.floor(Math.random()*chars.length)]; }
   function drawEQBars() {
     const barWidth = w / cols;
     for (let i = 0; i < cols; i++) {
@@ -88,25 +91,19 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
   function animate() {
     ctx.fillStyle = 'rgba(18, 18, 26, 0.16)';
     ctx.fillRect(0, 0, w, h);
-
     ctx.font = `${fontSize}px monospace`;
     ctx.textAlign = 'center';
-
     for (let i = 0; i < drops.length; i++) {
       ctx.fillStyle = 'rgba(255, 168, 46, 0.95)';
       ctx.shadowColor = 'rgba(255,168,46,0.7)';
       ctx.shadowBlur = 16;
       ctx.fillText(randChar(), i * w / cols + w/(cols*2), drops[i] * fontSize);
-
-      // much slower fall speed
-      drops[i] += Math.random() * 0.2 + 0.1;
-
+      drops[i] += Math.random() * 1.8 + 1.2;
       if (drops[i] * fontSize > h - eqBars[i] - 20) {
         drops[i] = Math.random() * -10;
       }
       ctx.shadowBlur = 0;
     }
-
     drawEQBars();
     requestAnimationFrame(animate);
   }
