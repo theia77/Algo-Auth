@@ -98,7 +98,9 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
       ctx.fillText(randChar(), i * w / cols + w/(cols*2), drops[i] * fontSize);
 
       // slower fall speed
-      drops[i] += Math.random() * 0.8 + 0.6;
+            // much slower fall speed
+      drops[i] += Math.random() * 0.3 + 0.2;
+
 
       if (drops[i] * fontSize > h - eqBars[i] - 20) {
         drops[i] = Math.random() * -10;
