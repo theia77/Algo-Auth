@@ -101,7 +101,6 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
             // much slower fall speed
       drops[i] += Math.random() * 0.3 + 0.2;
 
-
       if (drops[i] * fontSize > h - eqBars[i] - 20) {
         drops[i] = Math.random() * -10;
       }
