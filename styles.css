@@ -12,49 +12,22 @@
 }
 
 html, body { height: 100%; margin: 0; overflow: hidden; }
-body {
-  font-family: "Poppins", sans-serif;
-  background: linear-gradient(90deg, var(--bg-1), var(--bg-2));
-}
+body { font-family: "Poppins", sans-serif; background: linear-gradient(90deg, var(--bg-1), var(--bg-2)); }
 
-.brand {
-  position: absolute;
-  top: 24px; left: 32px;
-  display: flex; gap: 12px; align-items: center;
-  z-index: 10;
-}
-.brand__logo {
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  width: 38px; height: 38px; border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  font-weight: 800; color: #251a00;
-}
+.brand { position: absolute; top: 24px; left: 32px; display: flex; gap: 12px; align-items: center; z-index: 10; }
+.brand__logo { background: linear-gradient(135deg, var(--accent), var(--accent-2)); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #251a00; }
 .brand__name { font-weight: bold; font-size: 22px; color: var(--text); }
 
 .container { position: relative; width: 100vw; height: 100vh; }
 
-/* MATRIX BACKGROUND CANVAS */
-#matrix-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  pointer-events: none;
-  background: transparent;
-}
+/* Matrix background */
+#matrix-bg { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
 
 .form-box {
-  position: absolute;
-  top: 0;
-  width: 50%;
-  min-width: 320px;
-  height: 100%;
+  position: absolute; top: 0; width: 50%; min-width: 320px; height: 100%;
   display: flex; align-items: center; justify-content: center;
-  transition: transform 0.7s ease, opacity 0.35s ease;
-  z-index: 2;
+  transition: transform 0.7s ease, opacity 0.35s ease; z-index: 2;
 }
-
 .form-box__inner {
   width: 100%; max-width: 400px;
   background: rgba(255,255,255,0.016);
@@ -64,14 +37,12 @@ body {
   box-shadow: var(--shadow);
   backdrop-filter: blur(8px);
 }
-
 .form-box h1 {
   font-size: 30px;
   margin-bottom: 8px;
   background: linear-gradient(135deg, var(--accent), var(--accent-2));
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  color: transparent;
   text-shadow: 0 0 10px rgba(255, 168, 46, 0.6), 0 0 20px rgba(255, 168, 46, 0.4);
 }
 .form-box p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
@@ -79,12 +50,9 @@ body {
 .input-box { position: relative; margin-top: 16px; width: 100%; }
 .input-box input {
   width: 100%; min-width: 0;
-  padding: 0 44px 0 12px;
-  height: 48px;
-  border-radius: 12px;
-  border: 1px solid var(--outline);
-  background: #15151a;
-  color: var(--text);
+  padding: 0 44px 0 12px; height: 48px;
+  border-radius: 12px; border: 1px solid var(--outline);
+  background: #15151a; color: var(--text);
 }
 .input-box input::placeholder { color: #9292aa; }
 .icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #aaa; }
@@ -94,12 +62,32 @@ body {
 .btn.ghost { border: 1px solid var(--accent); background: transparent; color: var(--accent-2); padding: 8px 14px; }
 .alt { margin-top: 16px; display: flex; gap: 8px; font-size: 14px; color: var(--muted); }
 
+/* Social buttons */
+.social-auth { display: grid; gap: 10px; margin-bottom: 18px; }
+.btn.social {
+  width: 100%; height: 48px;
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 10px;
+  border: 1px solid var(--outline);
+  background: #12121a; color: var(--text);
+  box-shadow: 0 6px 18px rgba(0,0,0,.25);
+}
+.btn.social:hover { background: #15151f; border-color: var(--accent); }
+.btn.social.google { border-color: rgba(234,67,53,0.35); }
+.btn.social.github { border-color: rgba(255,255,255,0.12); }
+.divider { text-align: center; color: var(--muted); font-size: 13px; margin-top: 6px; position: relative; }
+.divider::before, .divider::after {
+  content: ""; position: absolute; top: 50%; width: 40%; height: 1px; background: var(--outline);
+}
+.divider::before { left: 0; }
+.divider::after { right: 0; }
+
 .form-box.login { left: 0; transform: translateX(0); opacity: 1; }
 .form-box.register { right: 0; transform: translateX(120%); opacity: 0; pointer-events: none; }
 .container.active .form-box.login { transform: translateX(-20%); opacity: 0.2; pointer-events: none; }
 .container.active .form-box.register { transform: translateX(0); opacity: 1; pointer-events: auto; }
 
 @media (max-width: 900px) {
-  .form-box { position: relative; width: 100%; height: auto;
-    opacity: 1 !important; transform: none !important; }
+  .form-box { position: relative; width: 100%; height: auto; transform: none !important; opacity: 1 !important; }
+  .form-box + .form-box { margin-top: 20px; }
 }
