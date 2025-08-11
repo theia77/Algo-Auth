@@ -1,18 +1,17 @@
+// Panel slide toggles
 const container = document.getElementById('container');
-const toRegister = document.getElementById('toRegister');
-const toLogin = document.getElementById('toLogin');
-
-toRegister?.addEventListener('click', () => {
+document.getElementById('toRegister')?.addEventListener('click', () => {
   container.classList.add('active');
   document.querySelector('.form-box.register').setAttribute('aria-hidden', 'false');
   document.querySelector('.form-box.login').setAttribute('aria-hidden', 'true');
 });
-toLogin?.addEventListener('click', () => {
+document.getElementById('toLogin')?.addEventListener('click', () => {
   container.classList.remove('active');
   document.querySelector('.form-box.register').setAttribute('aria-hidden', 'true');
   document.querySelector('.form-box.login').setAttribute('aria-hidden', 'false');
 });
 
+// Form submit demo
 document.getElementById('loginForm')?.addEventListener('submit', e => {
   e.preventDefault();
   toast('Signed in! (demo)');
@@ -25,6 +24,7 @@ document.getElementById('registerForm')?.addEventListener('submit', e => {
   toast('Account created! You can sign in now. (demo)');
 });
 
+// Toast message
 function toast(msg){
   let el = document.querySelector('.toast');
   if (!el){
@@ -43,71 +43,55 @@ function toast(msg){
   el._t = setTimeout(()=>{ el.style.opacity = '0'; }, 2000);
 }
 
-/* THREE.JS BACKGROUND */
+// MATRIX RAIN + EQ BARS BACKGROUND
 (() => {
-  const canvas = document.getElementById('scene3d');
-  if(!canvas || typeof THREE === 'undefined') return;
-  const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(45, window.innerWidth/window.innerHeight, 0.1, 1000);
-  camera.position.z = 42;
-  const renderer = new THREE.WebGLRenderer({ canvas, alpha:true, antialias:true });
-  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio));
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  const cols = 60; // matrix columns
+  const fontSize = 18;
+  const chars = '01{}[]<>+-*/;=()#';
+  const canvas = document.getElementById('matrix-bg');
+  const ctx = canvas.getContext('2d');
+  let w = canvas.width = window.innerWidth;
+  let h = canvas.height = window.innerHeight;
+  const drops = Array(cols).fill(1);
+  const eqBars = Array(cols).fill(1);
 
-  window.addEventListener('resize', () => {
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    camera.aspect = window.innerWidth/window.innerHeight;
-    camera.updateProjectionMatrix();
-  });
-
-  const group = new THREE.Group();
-  scene.add(group);
-
-  const accent = 0xffa82e;
-  const geo = new THREE.IcosahedronGeometry(14, 2);
-  const wireMat = new THREE.MeshBasicMaterial({ color: 0x2a2a3a, wireframe:true, transparent:true, opacity:.6 });
-  const mesh = new THREE.Mesh(geo, wireMat);
-  group.add(mesh);
-
-  const verts = geo.attributes.position;
-  const nodeGeo = new THREE.SphereGeometry(0.18, 8, 8);
-  const nodeMat = new THREE.MeshBasicMaterial({ color: accent, transparent:true, opacity:.85 });
-  for(let i=0;i<verts.count;i++){
-    const node = new THREE.Mesh(nodeGeo, nodeMat.clone());
-    node.position.fromBufferAttribute(verts, i);
-    node.position.multiplyScalar(1.02);
-    group.add(node);
+  function randChar() {
+    return chars[Math.floor(Math.random() * chars.length)];
   }
-
-  const bars = new THREE.Group();
-  group.add(bars);
-  const barMat = new THREE.MeshBasicMaterial({ color: accent, transparent:true, opacity:.9 });
-  for(let i=0;i<24;i++){
-    const bgeo = new THREE.BoxGeometry(0.35, 1.5, 0.35);
-    const bar = new THREE.Mesh(bgeo, barMat.clone());
-    const angle = (i / 24) * Math.PI * 2;
-    const r = 10.5;
-    bar.position.set(Math.cos(angle)*r, Math.sin(angle)*r, -2.5);
-    bars.add(bar);
+  function drawEQBars() {
+    const barWidth = w / cols;
+    for (let i = 0; i < cols; i++) {
+      eqBars[i] = Math.max(4, Math.sin(Date.now()/300 + i) * 42 + Math.random() * 24);
+      ctx.fillStyle = 'rgba(255, 168, 46, 0.75)';
+      ctx.shadowColor = 'rgba(255,168,46,0.7)';
+      ctx.shadowBlur = 16;
+      ctx.fillRect(i * barWidth, h - eqBars[i], barWidth * 0.7, eqBars[i]);
+      ctx.shadowBlur = 0;
+    }
   }
+  function animate() {
+    ctx.fillStyle = 'rgba(18, 18, 26, 0.16)';
+    ctx.fillRect(0, 0, w, h);
 
-  let targetRX = 0, targetRY = 0, rx = 0, ry = 0;
-  window.addEventListener('mousemove', e => {
-    targetRX = (0.5 - (e.clientY / window.innerHeight)) * 0.6;
-    targetRY = ((e.clientX / window.innerWidth) - 0.5) * 0.6;
-  });
-
-  function animate(){
+    ctx.font = `${fontSize}px monospace`;
+    ctx.textAlign = 'center';
+    for (let i = 0; i < drops.length; i++) {
+      ctx.fillStyle = 'rgba(255, 168, 46, 0.95)';
+      ctx.shadowColor = 'rgba(255,168,46,0.7)';
+      ctx.shadowBlur = 16;
+      ctx.fillText(randChar(), i * w/cols + w/(cols*2), drops[i] * fontSize);
+      drops[i] += Math.random() * 1.8 + 1.2;
+      if (drops[i] * fontSize > h - eqBars[i] - 20) {
+        drops[i] = Math.random() * -10;
+      }
+      ctx.shadowBlur = 0;
+    }
+    drawEQBars();
     requestAnimationFrame(animate);
-    rx += (targetRX - rx) * 0.06;
-    ry += (targetRY - ry) * 0.06;
-    group.rotation.x = rx;
-    group.rotation.y = ry;
-    bars.children.forEach((bar, i) => {
-      const h = 1.0 + Math.sin(Date.now()/500 + i)*0.5;
-      bar.scale.y = h;
-    });
-    renderer.render(scene, camera);
   }
+  window.addEventListener('resize', () => {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  });
   animate();
 })();
