@@ -89,3 +89,13 @@ body {
   .form-box + .form-box { margin-top: 20px; }
   .form-box__inner { border-radius: 14px; padding: 18px 6vw; max-width: 98vw; }
 }
+.form-box h1 {
+  font-size: 30px;
+  line-height: 1.18;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(255, 168, 46, 0.6), 0 0 20px rgba(255, 168, 46, 0.4);
+}
