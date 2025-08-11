@@ -1,12 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AlgoRhythm | Sign In</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AlgoRhythm | Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <header class="brand">
@@ -15,8 +14,9 @@
   </header>
 
   <div class="container" id="container">
-    <canvas id="scene3d" aria-hidden="true"></canvas>
-    <!-- LOGIN -->
+    <canvas id="matrix-bg" aria-hidden="true"></canvas>
+
+    <!-- LOGIN PANEL -->
     <section class="form-box login" aria-hidden="false">
       <div class="form-box__inner">
         <h1>Welcome back</h1>
@@ -38,7 +38,8 @@
         </div>
       </div>
     </section>
-    <!-- REGISTER -->
+
+    <!-- REGISTER PANEL -->
     <section class="form-box register" aria-hidden="true">
       <div class="form-box__inner">
         <h1>Create account</h1>
@@ -65,6 +66,6 @@
       </div>
     </section>
   </div>
-  <script src="app.js"></script>
+<script src="app.js"></script>
 </body>
 </html>
