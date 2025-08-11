@@ -1,97 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>AlgoRhythm | Sign In</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AlgoRhythm | Sign In</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="brand">
-    <div class="brand__logo">AR</div>
-    <div class="brand__name">AlgoRhythm</div>
-  </header>
+<header class="brand">
+  <div class="brand__logo">AR</div>
+  <div class="brand__name">AlgoRhythm</div>
+</header>
 
-  <div class="container" id="container">
-    <canvas id="wave-bg" aria-hidden="true"></canvas>
+<div class="container" id="container">
+  <canvas id="matrix-bg" aria-hidden="true"></canvas>
 
-    <!-- LOGIN PANEL -->
-    <section class="form-box login" aria-hidden="false">
-      <div class="form-box__inner">
-        <h1>Welcome back</h1>
-        <p>Sign in to keep coding in sync.</p>
+  <!-- LOGIN -->
+  <section class="form-box login" aria-hidden="false">
+    <div class="form-box__inner">
+      <h1>Welcome back</h1>
+      <p>Sign in to keep coding in sync.</p>
 
-        <div class="social-auth">
-          <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
-            <span>Continue with Google</span>
-          </button>
-          <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
-            <span>Continue with GitHub</span>
-          </button>
-          <div class="divider">or</div>
-        </div>
-
-        <form id="loginForm">
-          <div class="input-box">
-            <input type="email" id="loginEmail" placeholder="Email" required />
-            <i class="icon">@</i>
-          </div>
-          <div class="input-box">
-            <input type="password" id="loginPassword" placeholder="Password" minlength="6" required />
-            <i class="icon">•••</i>
-          </div>
-          <button type="submit" class="btn primary">Sign In</button>
-        </form>
-
-        <div class="alt">
-          <span>New to AlgoRhythm?</span>
-          <button class="btn ghost" id="toRegister">Create account</button>
-        </div>
+      <div class="social-auth">
+        <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 48 48" style="margin-right:8px;">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-4.3 5.5-7.8 5.5-4.6 0-8.4-3.7-8.4-8.4s3.7-8.4 8.4-8.4c2.1 0 
+            4 0.8 5.5 2.1l3.2-3.2c-2-1.8-4.6-3-7.6-3-6.4 0-11.7 5.2-11.7 11.7s5.2 11.7 11.7 11.7c6.8 0 11.6-4.8 
+            11.6-11.7 0-0.8-0.1-1.6-0.3-2.4z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+        <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;">
+            <path d="M12 .5A12 12 0 0 0 0 12.3c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 
+            1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6 1.3 1.6 1.3.8 1.5 2 1 2.5.8.1-.7.6-1.1 1-1.3-2.7-.3-5.5-1.3-5.5-5.7 
+            0-1.2.4-2.1 1-3-.1-.3-.4-1.5 0-3.1 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 
+            .4 1.6.1 2.9 0 3.1.7.9 1 1.8 1 3 0 4.4-2.7 5.4-5.5 5.7.5.4 1 1.1 1 2.3v3.3c0 .3.2.7.8.6 
+            4.8-1.5 8.2-6 8.2-11.4A12 12 0 0 0 12 .5z"/>
+          </svg>
+          <span>Continue with GitHub</span>
+        </button>
+        <div class="divider">or</div>
       </div>
-    </section>
 
-    <!-- REGISTER PANEL -->
-    <section class="form-box register" aria-hidden="true">
-      <div class="form-box__inner">
-        <h1>Create account</h1>
-        <p>Join the flow — share problems, discuss solutions, sync music.</p>
-
-        <div class="social-auth">
-          <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
-            <span>Continue with Google</span>
-          </button>
-          <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
-            <span>Continue with GitHub</span>
-          </button>
-          <div class="divider">or</div>
+      <form id="loginForm">
+        <div class="input-box">
+          <input type="email" id="loginEmail" placeholder="Email" required />
+          <i class="icon">@</i>
         </div>
-
-        <form id="registerForm">
-          <div class="input-box">
-            <input type="text" id="regName" placeholder="Full name" required />
-            <i class="icon">👤</i>
-          </div>
-          <div class="input-box">
-            <input type="email" id="regEmail" placeholder="Email" required />
-            <i class="icon">@</i>
-          </div>
-          <div class="input-box">
-            <input type="password" id="regPassword" placeholder="Password (min 6 chars)" minlength="6" required />
-            <i class="icon">•••</i>
-          </div>
-          <button type="submit" class="btn primary">Sign Up</button>
-        </form>
-
-        <div class="alt">
-          <span>Already have an account?</span>
-          <button class="btn ghost" id="toLogin">Sign in</button>
+        <div class="input-box">
+          <input type="password" id="loginPassword" placeholder="Password" minlength="6" required />
+          <i class="icon">•••</i>
         </div>
+        <button type="submit" class="btn primary">Sign In</button>
+      </form>
+
+      <div class="alt">
+        <span>New to AlgoRhythm?</span>
+        <button class="btn ghost" id="toRegister" type="button">Create account</button>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 
-  <script src="app.js"></script>
+  <!-- REGISTER -->
+  <section class="form-box register" aria-hidden="true">
+    <div class="form-box__inner">
+      <h1>Create account</h1>
+      <p>Join the flow — share problems, discuss solutions, sync music.</p>
+
+      <div class="social-auth">
+        <button type="button" class="btn social google googleLogin" aria-label="Continue with Google">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 48 48" style="margin-right:8px;">
+            <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-4.3 5.5-7.8 5.5-4.6 0-8.4-3.7-8.4-8.4s3.7-8.4 8.4-8.4c2.1 0 
+            4 0.8 5.5 2.1l3.2-3.2c-2-1.8-4.6-3-7.6-3-6.4 0-11.7 5.2-11.7 11.7s5.2 11.7 11.7 11.7c6.8 0 11.6-4.8 
+            11.6-11.7 0-0.8-0.1-1.6-0.3-2.4z"/>
+          </svg>
+          <span>Continue with Google</span>
+        </button>
+        <button type="button" class="btn social github githubLogin" aria-label="Continue with GitHub">
+          <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:8px;">
+            <path d="M12 .5A12 12 0 0 0 0 12.3c0 5.3 3.4 9.8 8.2 11.4.6.1.8-.3.8-.6v-2.1c-3.3.7-4-1.6-4-1.6-.5-1.3-1.2-1.7-1.2-1.7-1-.7.1-.7.1-.7 
+            1.1.1 1.7 1.1 1.7 1.1 1 .1 1.6 1.3 1.6 1.3.8 1.5 2 1 2.5.8.1-.7.6-1.1 1-1.3-2.7-.3-5.5-1.3-5.5-5.7 
+            0-1.2.4-2.1 1-3-.1-.3-.4-1.5 0-3.1 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 4.9 0c1.9-1.3 2.7-1 2.7-1 
+            .4 1.6.1 2.9 0 3.1.7.9 1 1.8 1 3 0 4.4-2.7 5.4-5.5 5.7.5.4 1 1.1 1 2.3v3.3c0 .3.2.7.8.6 
+            4.8-1.5 8.2-6 8.2-11.4A12 12 0 0 0 12 .5z"/>
+          </svg>
+          <span>Continue with GitHub</span>
+        </button>
+        <div class="divider">or</div>
+      </div>
+
+      <form id="registerForm">
+        <div class="input-box">
+          <input type="text" id="regName" placeholder="Full name" required />
+          <i class="icon">👤</i>
+        </div>
+        <div class="input-box">
+          <input type="email" id="regEmail" placeholder="Email" required />
+          <i class="icon">@</i>
+        </div>
+        <div class="input-box">
+          <input type="password" id="regPassword" placeholder="Password (min 6 chars)" minlength="6" required />
+          <i class="icon">•••</i>
+        </div>
+        <button type="submit" class="btn primary">Sign Up</button>
+      </form>
+
+      <div class="alt">
+        <span>Already have an account?</span>
+        <button class="btn ghost" id="toLogin" type="button">Sign in</button>
+      </div>
+    </div>
+  </section>
+</div>
+<script src="app.js"></script>
 </body>
 </html>
