@@ -43,6 +43,7 @@ function withLoading(btn, fn) {
     finally { btn.classList.remove('is-loading'); }
   };
 }
+
 document.querySelectorAll('.googleLogin').forEach(btn => {
   btn.addEventListener('click', withLoading(btn, async () => {
     toast('Redirecting to Google... (demo)');
@@ -58,7 +59,7 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
   }));
 });
 
-// MATRIX RAIN + EQ BARS (slower speed)
+// MATRIX RAIN + EQ BARS (slow speed)
 (() => {
   const cols = 60;
   const fontSize = 18;
@@ -97,9 +98,8 @@ document.querySelectorAll('.githubLogin').forEach(btn => {
       ctx.shadowBlur = 16;
       ctx.fillText(randChar(), i * w / cols + w/(cols*2), drops[i] * fontSize);
 
-      // slower fall speed
-            // much slower fall speed
-      drops[i] += Math.random() * 0.3 + 0.2;
+      // much slower fall speed
+      drops[i] += Math.random() * 0.2 + 0.1;
 
       if (drops[i] * fontSize > h - eqBars[i] - 20) {
         drops[i] = Math.random() * -10;
