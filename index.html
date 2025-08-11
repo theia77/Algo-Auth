@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>AlgoRhythm | Sign In</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
-<script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AlgoRhythm | Sign In</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
 </head>
 <body>
   <header class="brand">
@@ -15,15 +15,13 @@
   </header>
 
   <div class="container" id="container">
-    <div class="toggle-bg"></div>
     <canvas id="scene3d" aria-hidden="true"></canvas>
-
-    <!-- LOGIN PANEL -->
+    <!-- LOGIN -->
     <section class="form-box login" aria-hidden="false">
       <div class="form-box__inner">
         <h1>Welcome back</h1>
         <p>Sign in to keep coding in sync.</p>
-        <form id="loginForm" autocomplete="on">
+        <form id="loginForm">
           <div class="input-box">
             <input type="email" id="loginEmail" placeholder="Email" required />
             <i class="icon">@</i>
@@ -40,13 +38,12 @@
         </div>
       </div>
     </section>
-
-    <!-- REGISTER PANEL -->
+    <!-- REGISTER -->
     <section class="form-box register" aria-hidden="true">
       <div class="form-box__inner">
         <h1>Create account</h1>
         <p>Join the flow — share problems, discuss solutions, sync music.</p>
-        <form id="registerForm" autocomplete="on">
+        <form id="registerForm">
           <div class="input-box">
             <input type="text" id="regName" placeholder="Full name" required />
             <i class="icon">👤</i>
@@ -68,6 +65,6 @@
       </div>
     </section>
   </div>
-<script src="app.js"></script>
+  <script src="app.js"></script>
 </body>
 </html>
