@@ -14,65 +14,80 @@
 html, body { height: 100%; margin: 0; overflow: hidden; }
 body {
   font-family: "Poppins", sans-serif;
-  background: radial-gradient(1000px 600px at 70% -10%, rgba(255,168,46,.15), transparent 60%), linear-gradient(90deg, var(--bg-1), var(--bg-2));
-  width: 100vw; height: 100vh;
+  background: linear-gradient(90deg, var(--bg-1), var(--bg-2));
 }
 
-.brand { position: absolute; top: 24px; left: 32px; display: flex; gap: 12px; z-index: 10; }
-.brand__logo { background: linear-gradient(135deg, var(--accent), var(--accent-2)); width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #251a00; }
-.brand__name { font-weight: bold; font-size: 22px; color: var(--text); letter-spacing: 0.7px; }
+.brand {
+  position: absolute;
+  top: 24px; left: 32px;
+  display: flex; gap: 12px; align-items: center;
+  z-index: 10;
+}
+.brand__logo {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  width: 38px; height: 38px; border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-weight: 800; color: #251a00;
+}
+.brand__name { font-weight: bold; font-size: 22px; color: var(--text); }
 
 .container { position: relative; width: 100vw; height: 100vh; }
 
-#scene3d { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+/* MATRIX BACKGROUND CANVAS */
+#matrix-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  background: transparent;
+}
 
 .form-box {
   position: absolute;
   top: 0;
-  width: 50vw;
+  width: 50%;
   min-width: 320px;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-  transition: transform 0.7s cubic-bezier(.55,.07,.52,.55), opacity 0.35s cubic-bezier(.4,0,.2,1);
+  height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform 0.7s ease, opacity 0.35s ease;
+  z-index: 2;
 }
 
 .form-box__inner {
-  width: 100%;
-  max-width: 410px;
-  min-width: 0;
-  background: rgba(255,255,255,0.018);
+  width: 100%; max-width: 400px;
+  background: rgba(255,255,255,0.016);
   border: 1px solid var(--outline);
   border-radius: 18px;
-  padding: 36px 24px 32px 24px;
+  padding: 36px 24px 32px;
   box-shadow: var(--shadow);
   backdrop-filter: blur(8px);
-  box-sizing: border-box;
 }
 
-.input-box { position: relative; margin-top: 18px; width: 100%; }
+.form-box h1 {
+  font-size: 30px;
+  margin-bottom: 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  text-shadow: 0 0 10px rgba(255, 168, 46, 0.6), 0 0 20px rgba(255, 168, 46, 0.4);
+}
+.form-box p { color: var(--muted); font-size: 15px; margin-bottom: 20px; }
+
+.input-box { position: relative; margin-top: 16px; width: 100%; }
 .input-box input {
-  width: 100%;
-  min-width: 0;
+  width: 100%; min-width: 0;
   padding: 0 44px 0 12px;
   height: 48px;
   border-radius: 12px;
   border: 1px solid var(--outline);
   background: #15151a;
   color: var(--text);
-  font-size: 16px;
-  display: block;
 }
 .input-box input::placeholder { color: #9292aa; }
-.icon {
-  position: absolute;
-  right: 14px; top: 50%;
-  transform: translateY(-50%);
-  font-size: 14px;
-  color: #aaa;
-}
+.icon { position: absolute; right: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #aaa; }
 
 .btn { border: none; border-radius: 12px; font-weight: bold; cursor: pointer; }
 .btn.primary { width: 100%; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: #1e1400; height: 48px; margin-top: 24px; }
@@ -85,17 +100,6 @@ body {
 .container.active .form-box.register { transform: translateX(0); opacity: 1; pointer-events: auto; }
 
 @media (max-width: 900px) {
-  .form-box { position: relative; width: 100vw; height: auto; opacity: 1 !important; transform: none !important; }
-  .form-box + .form-box { margin-top: 20px; }
-  .form-box__inner { border-radius: 14px; padding: 18px 6vw; max-width: 98vw; }
-}
-.form-box h1 {
-  font-size: 30px;
-  line-height: 1.18;
-  margin-bottom: 8px;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  text-shadow: 0 0 10px rgba(255, 168, 46, 0.6), 0 0 20px rgba(255, 168, 46, 0.4);
+  .form-box { position: relative; width: 100%; height: auto;
+    opacity: 1 !important; transform: none !important; }
 }
